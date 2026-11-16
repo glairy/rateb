@@ -1,0 +1,886 @@
+<title>Rateb</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap">
+<style>
+/* Layout: phone-first money wallet. One column of cards, bottom tab bar, sheet-style forms. */
+:root{
+  --bg:#eef2f0; --card:#ffffff; --ink:#13201b; --muted:#5f6f68; --line:#d9e2dd; --soft:#e4ebe7;
+  --accent:#0f7a62; --accent-ink:#ffffff; --accent-soft:#dcefe8;
+  --gold:#a86a12; --gold-soft:#f6ead6; --good:#18794e; --bad:#b4372e; --warn:#a86a12;
+  --f-body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --f-num:"Fraunces","IBM Plex Sans Arabic",Georgia,serif;
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1311; --card:#141d1a; --ink:#e6eeea; --muted:#93a59d; --line:#24312c; --soft:#1b2723;
+  --accent:#3fc69f; --accent-ink:#06130f; --accent-soft:#16332a;
+  --gold:#e3b25c; --gold-soft:#2e2414; --good:#4fcf91; --bad:#f07b70; --warn:#e3b25c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1311; --card:#141d1a; --ink:#e6eeea; --muted:#93a59d; --line:#24312c; --soft:#1b2723;
+  --accent:#3fc69f; --accent-ink:#06130f; --accent-soft:#16332a;
+  --gold:#e3b25c; --gold-soft:#2e2414; --good:#4fcf91; --bad:#f07b70; --warn:#e3b25c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+.app{max-width:560px;margin:0 auto;padding-block:16px 110px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.brand{font-family:var(--f-num);font-size:24px;font-weight:600;letter-spacing:-.01em}
+.top .sub{color:var(--muted);font-size:13px}
+.chip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 12px;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px;min-width:0}
+.card h2{margin:0;font-size:15px;font-weight:600}
+.card .hint{margin:0;color:var(--muted);font-size:13px}
+.pot{background:linear-gradient(160deg,var(--gold-soft),var(--card) 70%);border-color:color-mix(in srgb,var(--gold) 35%,var(--line))}
+.lbl{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px}
+.lbl svg{width:14px;height:14px;flex:none}
+.big{font-family:var(--f-num);font-weight:600;font-size:44px;line-height:1.05;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.big small{font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--muted);margin-inline-start:6px;letter-spacing:0}
+.mid{font-family:var(--f-num);font-weight:600;font-size:26px;font-variant-numeric:tabular-nums}
+.track{height:10px;border-radius:99px;background:var(--soft);overflow:hidden}
+.track i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+.pot .track i{background:var(--gold)}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px}
+.row span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.row.t{font-weight:600;border-top:1px solid var(--line);padding-top:8px}
+.muted{color:var(--muted)} .good{color:var(--good)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--soft);border-radius:12px;padding:10px 12px;display:grid;gap:2px;min-width:0}
+.stat .k{font-size:12px;color:var(--muted)} .stat .v{font-weight:600;font-variant-numeric:tabular-nums;font-size:17px}
+.bars{display:grid;gap:10px}
+.bar{display:grid;gap:4px}
+.bar .bt{position:relative;height:8px;border-radius:99px;background:var(--soft)}
+.bar .bt i{position:absolute;inset-block:0;inset-inline-start:0;border-radius:99px;background:var(--accent)}
+.bar .bt b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--muted);border-radius:2px}
+.btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:11px 16px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn.danger{background:transparent;color:var(--bad);border:1px solid var(--bad)}
+.btn:focus-visible,.chip:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.alert{border:1px solid var(--warn);border-radius:12px;padding:10px 12px;font-size:14px;display:grid;gap:8px}
+.nav{position:fixed;inset:auto 0 0 0;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);z-index:5}
+.nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{font:inherit;font-size:12px;background:none;border:0;color:var(--muted);padding:9px 4px 10px;display:grid;justify-items:center;gap:2px;cursor:pointer}
+.tab svg{width:22px;height:22px}
+.tab[aria-current="page"]{color:var(--accent);font-weight:600}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:7px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+form{display:grid;gap:12px}
+.f{display:grid;gap:4px;min-width:0}
+.f label{font-size:13px;color:var(--muted)}
+.f input,.f select,.f textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-width:0}
+.f.chk{display:flex;align-items:center;gap:8px} .f.chk input{width:auto}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.appbox{border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px}
+.appbox h3{margin:0;font-size:14px}
+.calc{background:var(--soft);border-radius:12px;padding:10px 12px;display:grid;gap:4px;font-size:14px}
+.list{display:grid}
+.it{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:0}
+.it .l{min-width:0;display:grid}
+.it .l b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it .l span{font-size:12px;color:var(--muted)}
+.it .r{display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.icon-btn{font:inherit;font-size:12px;border:1px solid var(--line);background:none;color:var(--muted);border-radius:8px;padding:4px 8px;cursor:pointer}
+.icon-btn.sure{color:var(--bad);border-color:var(--bad)}
+.adv summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14px}
+.adv[open]{display:grid;gap:10px}
+.apps{display:grid;gap:8px}
+.approw{display:grid;grid-template-columns:minmax(64px,1fr) 1.2fr 1fr;gap:8px;align-items:center}
+.approw.head span{font-size:12px;color:var(--muted)}
+.approw input{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-width:0}
+details.more{display:grid;gap:10px} details.more[open]{display:grid;gap:10px}
+details.more summary{cursor:pointer;color:var(--accent);font-size:14px;font-weight:600}
+.chips button{font-size:13px;padding:5px 12px}
+.icon-btn.done{color:var(--good);border-color:var(--good)}
+.it.faded .l b{color:var(--muted);text-decoration:line-through}
+.fab{position:fixed;inset-inline-end:max(18px,env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);font-size:30px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.22);cursor:pointer;z-index:5}
+.welcome{font-family:var(--f-num);font-size:26px}
+.payday{position:fixed;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.45)}
+.payday .card{width:100%;max-width:420px;max-height:calc(100dvh - 32px);overflow:auto;display:grid;gap:12px;text-align:center}
+.payday .tag{color:var(--accent);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+.payday .big{justify-content:center}
+.payday .lines{display:grid;gap:8px;text-align:start;border-top:1px solid var(--line);padding-top:12px}
+.payday .note{font-size:14px;color:var(--muted)}
+.payday .plus{color:var(--good);font-weight:700}
+.payday .minus{color:var(--bad);font-weight:700}
+.monthnav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+[hidden]{display:none!important}
+.toast{position:fixed;inset-inline:0;bottom:calc(84px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;z-index:6}
+.toast span{background:var(--ink);color:var(--bg);border-radius:99px;padding:8px 16px;font-size:14px}
+.empty{color:var(--muted);text-align:center;padding:18px 8px;font-size:14px}
+[dir="rtl"] .flip{transform:scaleX(-1)}
+@media (prefers-reduced-motion:no-preference){.track i,.bar .bt i{transition:width .5s cubic-bezier(.2,.7,.2,1)}}
+</style>
+
+<div class="app" id="app">
+  <div class="top">
+    <div><div class="brand" id="brand">Rateb</div><div class="sub" id="status">Loading…</div></div>
+    <button class="chip" id="langBtn" type="button">العربية</button>
+  </div>
+  <main id="view"><div class="card"><p class="hint">Loading your money…</p></div></main>
+</div>
+<nav class="nav" aria-label="Main"><div class="in" id="nav"></div></nav>
+<button class="fab" id="fab" type="button" aria-label="Add" hidden>+</button>
+<div class="toast" id="toast" hidden><span id="toastText"></span></div>
+
+<script>
+/* ---------- i18n ---------- */
+const T = {
+en:{brand:"Rateb",home:"Home",add:"Add",history:"History",settings:"Settings",lang:"العربية",
+ nextPay:"Next month's pay",locked:"Locked until",of:"of",salaryGoal:"salary goal",toSave:"extra goes to savings",toGo:"to reach your salary",
+ thisMonth:"This month",salary:"Salary",startMoney:"Starting money",bills:"Bills",spent:"Spent",left:"Left to spend",
+ leftNote:"Whatever is left on the last day goes to savings.",leftNoteZero:"Whatever is left on the last day is added to next month's pay.",carry:"Unspent starting money",firstSalary:"First salary (money you had at the start)",advance:"Advance from next month's pay",takeAdv:"Take an advance",advNote:"Borrow from next month's pay for this month. It comes off next month's pay. Available now: {x}.",dayExists:"You already have a shift on this day. Opened it so you can update it.",dayNote:"One shift per day. Update the day's totals: first start and last end odometer, and each app's total SAR and trips.",pace1:"Earn about",pace2:"a day for the next {d} days to hit your salary.",cushion:"Covers {m} months of salary",savings:"Savings",short:"Your pay for this month was",shortBy:"short of your salary by",
+ cover:"Cover from savings",billsDue:"Bills",stillDue:"Still to pay",markPaid:"Paid?",isPaid:"Paid",forMonth:"for",prevMonth:"Paid at the end of the month before (from money that just arrived)",more:"More details (times, tips, bonuses, note)",moreExp:"More (type, note)",recent:"Recent",welcome:"Welcome to Rateb",welcomeTxt:"Rateb turns irregular income into a monthly salary. What you earn this month is locked and paid to you on the 1st. Anything extra goes to savings.",qHave:"How much money do you have right now to live on until the 1st?",qSalary:"What monthly salary do you want to pay yourself?",qFixed:"Do you get a fixed amount every month, like a stipend? (optional)",qFixedName:"Name, e.g. University",qWork:"Do you earn on platforms where you track km and fuel, like Uber or delivery apps? (optional)",qWorkName:"List name, e.g. Driving",qOther:"Other income lists (optional, comma separated), e.g. Freelance, Tutoring",startBtn:"Start",afterCosts:"after costs",covered:"Covered from savings",driving:"Work",earnings:"Earnings",workFuel:"Work fuel",carCosts:"Work costs",profit:"Profit",
+ perHour:"Per hour",trips:"jobs",shifts:"Work days",car:"Vehicle",kmL:"km/L",labFig:"lab figure",costKm:"Fuel cost / km",odo:"Odometer",oilIn:"Oil change in",
+ personalKm:"Personal km",spending:"Spending by category",budget:"budget",upcoming:"Bills coming up",nothing:"Nothing yet.",
+ shift:"Work day",fuel:"Fill-up",expense:"Expense",income:"Income",odoReading:"Odometer",date:"Date",start:"Start time",end:"End time",
+ startOdo:"Start odometer",endOdo:"End odometer",sar:"SAR",tips:"Tips",bonuses:"Bonuses",note:"Note",save:"Save",cancel:"Cancel",update:"Save changes",
+ liters:"Liters",paid:"SAR paid",fullTank:"Filled to full",tripKm:"Trip A km (optional)",amount:"Amount",category:"Category",type:"Type",
+ personal:"Personal",shared:"Shared",workShare:"Work share %",list:"List",edit:"Edit",del:"Delete",sure:"Sure?",saved:"Saved",deleted:"Deleted",
+ workKm:"Work km",hours:"Hours",fuelCost:"Fuel cost",net:"Net profit",general:"General",salaryAmt:"Monthly salary you pay yourself",
+ startDate:"Start date (counting begins)",startBal:"Money you had on the start date (your first salary)",lists:"Income lists",drivingList:"Work list (platforms, km and fuel)",simpleList:"Simple income list",
+ apps:"Platforms (comma separated)",fixedAmt:"Fixed amount each month (optional)",fixedDay:"Day of the month it arrives (goes into next month's pay)",name:"Name",addList:"Add list",
+ billsS:"Bills and installments",day:"Due day",endMonth:"Last month (optional)",billDate:"Due date",repeats:"Repeats",rep0:"Once",rep1:"Every month",rep2:"Every 2 months",rep3:"Every 3 months",rep6:"Every 6 months",rep12:"Every year",fromD:"from",until:"until",pdTitle:"Payday",pdHere:"Your salary is here",pdSaved:"extra went to savings",pdShort:"Your pay was short of your {s} salary by",pdShortHint:"You can cover it from savings on the home screen.",pdPrevLeft:"left over from {m} also went to savings",pdPrevOver:"{m} went over by",pdPrevOverHint:"It came out of savings.",pdBills:"Bills this month",pdToSpend:"Yours to spend",pdSavings:"Savings now",pdGo:"Let's go",pdShow:"Show payday screen",dataS:"Your data",dataTxt:"Download everything you logged as a spreadsheet. Each list gets its own sheet.",dlBtn:"Download spreadsheet (.xlsx)",dlFail:"Download didn't work. Try again.",dlNo:"Downloads aren't available here.",dlWorking:"Preparing…",bkBtn:"Download backup (.json)",bkRestore:"Restore a backup",bkSure:"Tap again to restore",bkDone:"Backup restored",bkBad:"That file isn't a Rateb backup.",bkTxt:"A backup holds everything, so you can move your data to another account or device.",account:"Account",signOut:"Sign out",signedAs:"Signed in as",
+shMonths:"Months",shWork:"Work days",shIncome:"Income",shExp:"Expenses",shFuel:"Fuel",shBills:"Bills",shOdo:"Odometer",shLists:"Lists",colMonth:"Month",colSalary:"Salary paid",colToSave:"Extra to savings",colShort:"Short",colLeft:"Left (to savings)",colDate:"Date",colStart:"Start",colEnd:"End",colHours:"Hours",colStartOdo:"Start odometer",colEndOdo:"End odometer",colKm:"Work km",colJobs:"jobs",colTips:"Tips",colBonus:"Bonuses",colEarn:"Earnings",colFuelCost:"Work fuel",colNet:"Net",colNote:"Note",colList:"List",colAmount:"Amount",colCat:"Category",colType:"Type",colShare:"Work share %",colOdo:"Odometer",colLiters:"Liters",colFull:"Full tank",colFirst:"First due date",colTimes:"Payments",colLast:"Last month",colName:"Name",colApps:"Platforms",colFixed:"Fixed amount",colFixedDay:"Fixed day",yes:"Yes",no:"No",times:"Number of payments",noEnd:"No end",nPay:"payments",addBill:"Add bill",carS:"Vehicle",fuelPrice:"Fuel price (SAR/L)",
+ saso:"Official km/L",defKmL:"km/L to use before your first measured tank",oilEvery:"Oil change every (km)",oilMonths:"or every (months)",
+ oilOdo:"Odometer at last oil change",oilDate:"Date of last oil change",budgets:"Monthly budgets",signin:"Sign in to claude.ai to use your money app.",
+ synced:"Saved to your account",offline:"Can't reach your data yet. Check your connection.",payday:"Payday",fixed:"fixed",
+ driveNet:"Earned",monthZero:"Your first month: you're living on your starting money while next month's pay builds up.",
+ prev:"Previous",next:"Next",readOnly:"You can view this page but not save to it.",perTrip:"/job",fillAll:"Fill in date and amount.",
+ kmCheck:"End odometer must be higher than start.",kmLnote:"Measured on full tanks only.",fills:"fill-ups",since:"since full",
+ paysFrom:"Paid from that month's salary",addFirst:"Tap Add to log your first entry.",cats:{"Food & drinks":"Food & drinks","Groceries":"Groceries","Transport (non-work)":"Transport (non-work)","Phone/data":"Phone/data","Subscriptions":"Subscriptions","Health & dental":"Health & dental","Education":"Education","Clothes":"Clothes","Family":"Family","Entertainment":"Entertainment","Gifts":"Gifts","Debt/installments":"Debt/installments","Car wash":"Car wash","Maintenance":"Maintenance","Other":"Other","Fuel (personal)":"Fuel (personal)"}},
+ar:{brand:"راتب",home:"الرئيسية",add:"إضافة",history:"السجل",settings:"الإعدادات",lang:"English",
+ nextPay:"راتب الشهر القادم",locked:"مقفل حتى",of:"من",salaryGoal:"هدف الراتب",toSave:"الزيادة تذهب للادخار",toGo:"للوصول إلى راتبك",
+ thisMonth:"هذا الشهر",salary:"الراتب",startMoney:"المبلغ الابتدائي",bills:"الفواتير",spent:"المصروف",left:"المتبقي للصرف",
+ leftNote:"ما يتبقى في آخر يوم يذهب للادخار.",leftNoteZero:"ما يتبقى في آخر يوم يُضاف إلى راتب الشهر القادم.",carry:"المبلغ الابتدائي غير المصروف",firstSalary:"أول راتب (المبلغ الذي كان معك)",advance:"سلفة من راتب الشهر القادم",takeAdv:"خذ سلفة",advNote:"استلف من راتب الشهر القادم لهذا الشهر. تُخصم من راتب الشهر القادم. المتاح الآن: {x}.",dayExists:"لديك وردية في هذا اليوم. تم فتحها لتحديثها.",dayNote:"وردية واحدة لكل يوم. حدّث إجمالي اليوم: أول عداد بداية وآخر عداد نهاية، وإجمالي كل تطبيق.",pace1:"اكسب حوالي",pace2:"يوميًا خلال {d} يومًا القادمة لتصل إلى راتبك.",cushion:"تكفي {m} شهر من الراتب",savings:"المدخرات",short:"راتب هذا الشهر كان",shortBy:"أقل من راتبك بـ",
+ cover:"غطِّ من المدخرات",billsDue:"الفواتير",stillDue:"المتبقي للدفع",markPaid:"دُفعت؟",isPaid:"مدفوعة",forMonth:"لشهر",prevMonth:"تُدفع في نهاية الشهر السابق (من المبلغ الذي وصل)",more:"تفاصيل أكثر (الأوقات، البقشيش، المكافآت، ملاحظة)",moreExp:"المزيد (النوع، ملاحظة)",recent:"الأخيرة",welcome:"أهلًا بك في راتب",welcomeTxt:"راتب يحوّل الدخل غير الثابت إلى راتب شهري. ما تكسبه هذا الشهر يُقفل ويُصرف لك في يوم 1. وأي زيادة تذهب للادخار.",qHave:"كم معك الآن من المال لتعيش عليه حتى يوم 1؟",qSalary:"كم الراتب الشهري الذي تريد أن تدفعه لنفسك؟",qFixed:"هل لديك مبلغ ثابت كل شهر مثل المكافأة الجامعية؟ (اختياري)",qFixedName:"الاسم، مثل الجامعة",qWork:"هل تكسب من منصات تتابع فيها الكيلومترات والوقود مثل أوبر أو التوصيل؟ (اختياري)",qWorkName:"اسم القائمة، مثل التوصيل",qOther:"قوائم دخل أخرى (اختياري، مفصولة بفاصلة) مثل عمل حر، دروس خصوصية",startBtn:"ابدأ",afterCosts:"بعد المصاريف",covered:"تمت التغطية من المدخرات",driving:"عمل",earnings:"الدخل",workFuel:"وقود العمل",carCosts:"مصاريف العمل",profit:"الربح",
+ perHour:"في الساعة",trips:"طلب",shifts:"أيام العمل",car:"المركبة",kmL:"كم/لتر",labFig:"الرقم الرسمي",costKm:"تكلفة الوقود / كم",odo:"العداد",oilIn:"تغيير الزيت بعد",
+ personalKm:"كم شخصي",spending:"المصروف حسب الفئة",budget:"الميزانية",upcoming:"فواتير قادمة",nothing:"لا يوجد شيء بعد.",
+ shift:"يوم عمل",fuel:"تعبئة وقود",expense:"مصروف",income:"دخل",odoReading:"العداد",date:"التاريخ",start:"وقت البداية",end:"وقت النهاية",
+ startOdo:"عداد البداية",endOdo:"عداد النهاية",sar:"ريال",tips:"البقشيش",bonuses:"المكافآت",note:"ملاحظة",save:"حفظ",cancel:"إلغاء",update:"حفظ التعديل",
+ liters:"لتر",paid:"المبلغ المدفوع",fullTank:"تعبئة كاملة",tripKm:"عداد الرحلة A (اختياري)",amount:"المبلغ",category:"الفئة",type:"النوع",
+ personal:"شخصي",shared:"مشترك",workShare:"نسبة العمل %",list:"القائمة",edit:"تعديل",del:"حذف",sure:"متأكد؟",saved:"تم الحفظ",deleted:"تم الحذف",
+ workKm:"كم العمل",hours:"الساعات",fuelCost:"تكلفة الوقود",net:"صافي الربح",general:"عام",salaryAmt:"الراتب الشهري الذي تدفعه لنفسك",
+ startDate:"تاريخ البداية",startBal:"المبلغ الذي كان معك في تاريخ البداية",lists:"قوائم الدخل",drivingList:"قائمة عمل (منصات، كم ووقود)",simpleList:"قائمة دخل بسيطة",
+ apps:"المنصات (مفصولة بفاصلة)",fixedAmt:"مبلغ ثابت كل شهر (اختياري)",fixedDay:"يوم وصوله في الشهر (يُضاف لراتب الشهر القادم)",name:"الاسم",addList:"إضافة قائمة",
+ billsS:"الفواتير والأقساط",day:"يوم الاستحقاق",endMonth:"آخر شهر (اختياري)",billDate:"تاريخ الاستحقاق",repeats:"التكرار",rep0:"مرة واحدة",rep1:"كل شهر",rep2:"كل شهرين",rep3:"كل 3 أشهر",rep6:"كل 6 أشهر",rep12:"كل سنة",fromD:"من",until:"حتى",pdTitle:"يوم الراتب",pdHere:"وصل راتبك",pdSaved:"الزيادة ذهبت إلى المدخرات",pdShort:"راتبك كان أقل من {s} بمقدار",pdShortHint:"تقدر تغطي الفرق من المدخرات في الشاشة الرئيسية.",pdPrevLeft:"المتبقي من {m} ذهب أيضًا إلى المدخرات",pdPrevOver:"تجاوزت في {m} بمقدار",pdPrevOverHint:"تم خصمه من المدخرات.",pdBills:"فواتير هذا الشهر",pdToSpend:"لك لتصرفه",pdSavings:"المدخرات الآن",pdGo:"يلا نبدأ",pdShow:"اعرض شاشة الراتب",dataS:"بياناتك",dataTxt:"نزّل كل ما سجّلته كجدول بيانات. كل قائمة في ورقة مستقلة.",dlBtn:"تنزيل جدول البيانات (.xlsx)",dlFail:"لم ينجح التنزيل. حاول مرة أخرى.",dlNo:"التنزيل غير متاح هنا.",dlWorking:"جارٍ التجهيز…",bkBtn:"تنزيل نسخة احتياطية (.json)",bkRestore:"استعادة نسخة احتياطية",bkSure:"اضغط مرة أخرى للاستعادة",bkDone:"تمت استعادة النسخة",bkBad:"هذا الملف ليس نسخة احتياطية من راتب.",bkTxt:"النسخة الاحتياطية تحفظ كل شيء، لتنقل بياناتك إلى حساب أو جهاز آخر.",account:"الحساب",signOut:"تسجيل الخروج",signedAs:"مسجّل باسم",
+shMonths:"الأشهر",shWork:"أيام العمل",shIncome:"الدخل",shExp:"المصاريف",shFuel:"الوقود",shBills:"الفواتير",shOdo:"العداد",shLists:"القوائم",colMonth:"الشهر",colSalary:"الراتب المصروف",colToSave:"الزيادة للمدخرات",colShort:"النقص",colLeft:"المتبقي (للمدخرات)",colDate:"التاريخ",colStart:"البداية",colEnd:"النهاية",colHours:"الساعات",colStartOdo:"عداد البداية",colEndOdo:"عداد النهاية",colKm:"كم العمل",colJobs:"طلبات",colTips:"البقشيش",colBonus:"المكافآت",colEarn:"الدخل",colFuelCost:"وقود العمل",colNet:"الصافي",colNote:"ملاحظة",colList:"القائمة",colAmount:"المبلغ",colCat:"الفئة",colType:"النوع",colShare:"نسبة العمل %",colOdo:"العداد",colLiters:"لترات",colFull:"تعبئة كاملة",colFirst:"أول تاريخ استحقاق",colTimes:"عدد الدفعات",colLast:"آخر شهر",colName:"الاسم",colApps:"المنصات",colFixed:"المبلغ الثابت",colFixedDay:"يوم الثابت",yes:"نعم",no:"لا",times:"عدد الدفعات",noEnd:"بلا نهاية",nPay:"دفعات",addBill:"إضافة فاتورة",carS:"المركبة",fuelPrice:"سعر الوقود (ريال/لتر)",
+ saso:"الاستهلاك الرسمي كم/لتر",defKmL:"كم/لتر قبل أول قياس",oilEvery:"تغيير الزيت كل (كم)",oilMonths:"أو كل (شهر)",
+ oilOdo:"العداد عند آخر تغيير زيت",oilDate:"تاريخ آخر تغيير زيت",budgets:"الميزانيات الشهرية",signin:"سجّل الدخول إلى claude.ai لاستخدام التطبيق.",
+ synced:"محفوظ في حسابك",offline:"تعذر الوصول إلى بياناتك. تحقق من الاتصال.",payday:"يوم الراتب",fixed:"ثابت",
+ driveNet:"المكسب",monthZero:"شهرك الأول: تعيش على المبلغ الابتدائي بينما يتجمع راتب الشهر القادم.",
+ prev:"السابق",next:"التالي",readOnly:"يمكنك عرض الصفحة فقط.",perTrip:"/طلب",fillAll:"أدخل التاريخ والمبلغ.",
+ kmCheck:"عداد النهاية يجب أن يكون أكبر من البداية.",kmLnote:"يُقاس على التعبئات الكاملة فقط.",fills:"تعبئات",since:"منذ آخر تعبئة كاملة",
+ paysFrom:"تُدفع من راتب ذلك الشهر",addFirst:"اضغط إضافة لتسجيل أول عملية.",cats:{"Food & drinks":"أكل ومشروبات","Groceries":"بقالة","Transport (non-work)":"مواصلات (غير العمل)","Phone/data":"جوال وإنترنت","Subscriptions":"اشتراكات","Health & dental":"صحة وأسنان","Education":"تعليم","Clothes":"ملابس","Family":"العائلة","Entertainment":"ترفيه","Gifts":"هدايا","Debt/installments":"ديون وأقساط","Car wash":"غسيل السيارة","Maintenance":"صيانة","Other":"أخرى","Fuel (personal)":"وقود (شخصي)"}}
+};
+const CATS = Object.keys(T.en.cats).filter(c => c !== "Fuel (personal)");
+let lang = "en";
+const t = k => (T[lang][k] ?? T.en[k] ?? k);
+const catName = c => (T[lang].cats[c] || c);
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const n = v => (v === null || v === undefined || v === "" || isNaN(+v)) ? 0 : +v;
+const r2 = x => Math.round(x * 100) / 100;
+const fmt = (v, d) => { const x = n(v); const dd = d ?? (Number.isInteger(x) ? 0 : 2); return x.toLocaleString("en-US", {minimumFractionDigits: dd, maximumFractionDigits: dd}); };
+const ym = d => String(d || "").slice(0, 7);
+const addM = (m, k) => { const [y, mo] = m.split("-").map(Number); const d = new Date(Date.UTC(y, mo - 1 + k, 1)); return d.toISOString().slice(0, 7); };
+const today = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
+const monthName = m => new Date(m + "-01T12:00:00Z").toLocaleDateString(lang === "ar" ? "ar-SA-u-ca-gregory-nu-latn" : "en-US", {month: "long", year: "numeric", timeZone: "UTC"});
+const dayName = d => new Date(d + "T12:00:00Z").toLocaleDateString(lang === "ar" ? "ar-SA-u-ca-gregory-nu-latn" : "en-US", {day: "numeric", month: "short", timeZone: "UTC"});
+const el = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) { if (v === undefined || v === null || v === false) continue; if (k === "class") e.className = v; else if (k === "text") e.textContent = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v === true ? "" : v); } kids.flat().forEach(c => c != null && e.append(c.nodeType ? c : document.createTextNode(String(c)))); return e; };
+const ICON = {
+ home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>',
+ add:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>',
+ history:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
+ settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
+ lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'
+};
+const svgEl = s => { const d = document.createElement("span"); d.innerHTML = s; return d.firstChild; };
+let toastTimer;
+const toast = msg => { $("#toastText").textContent = msg; $("#toast").hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => $("#toast").hidden = true, 1800); };
+
+/* ---------- state ---------- */
+const DEFAULTS = {lang: "en", currency: "SAR", salary: 2000, start_date: today(), start_balance: 0, fuel_price: 2.18, saso_km_l: 0, default_km_l: 14, oil_interval_km: 5000, oil_interval_months: 6, oil_last_odo: 0, oil_last_date: "", budgets: {}};
+const COLS = ["lists", "income", "shifts", "fuel", "expenses", "bills", "odo", "paydays"];
+const S = {settings: {...DEFAULTS}, lists: [], income: [], shifts: [], fuel: [], expenses: [], bills: [], odo: [], paydays: [], ready: false};
+let db = null, uid = null, base = null, readOnly = false, statusKey = null;
+let view = "home", addKind = "shift", editing = null, histMonth = null;
+try { const v = localStorage.getItem("rateb-view"); if (v) view = v; const k = localStorage.getItem("rateb-kind"); if (k) addKind = k; } catch (e) {}
+
+/* ---------- money engine ---------- */
+function fuelStats() {
+  const s = S.settings;
+  const fills = [...S.fuel].sort((a, b) => String(a.date).localeCompare(String(b.date)) || n(a.odo) - n(b.odo));
+  let km = 0, lit = 0, prevFull = null, pending = 0, count = 0;
+  for (const f of fills) {
+    if (!f.full) { pending += n(f.liters); continue; }
+    const liters = n(f.liters) + pending; pending = 0;
+    let d = n(f.trip_km);
+    if (!d && prevFull && n(f.odo) && n(prevFull.odo)) d = n(f.odo) - n(prevFull.odo);
+    if (d > 0 && liters > 0 && (n(f.trip_km) || prevFull)) { km += d; lit += liters; count++; }
+    prevFull = f;
+  }
+  const avg = lit ? km / lit : null;
+  const use = avg || n(s.default_km_l) || 14;
+  const lastFull = [...fills].reverse().find(f => f.full);
+  const openL = lastFull ? fills.filter(f => !f.full && (String(f.date) > String(lastFull.date) || n(f.odo) > n(lastFull.odo))).reduce((a, f) => a + n(f.liters), 0) : 0;
+  return {avg, use, costKm: n(s.fuel_price) / use, count, km, lit, lastFull, openL};
+}
+function latestOdo() {
+  let best = 0;
+  S.shifts.forEach(x => best = Math.max(best, n(x.end_odo)));
+  S.fuel.forEach(x => best = Math.max(best, n(x.odo)));
+  S.odo.forEach(x => best = Math.max(best, n(x.odo)));
+  return best;
+}
+const expSplit = e => {
+  const a = n(e.amount);
+  if (e.type === "Driving") return {d: a, p: 0};
+  if (e.type === "Shared") { const d = r2(a * n(e.work_share) / 100); return {d, p: r2(a - d)}; }
+  return {d: 0, p: a};
+};
+const counts = d => String(d || "") >= String(S.settings.start_date || "");
+const zeroMonth = () => ym(S.settings.start_date || today());
+function fixedOccurrences(payMonth) {
+  // a fixed amount on day 1 of month X lands in X's pay; on any other day it lands in X+1's pay
+  const out = [];
+  S.lists.filter(l => n(l.fixed_amount) > 0).forEach(l => {
+    const day = Math.max(1, Math.min(28, n(l.fixed_day) || 1));
+    const m = day === 1 ? payMonth : addM(payMonth, -1);
+    const date = m + "-" + String(day).padStart(2, "0");
+    if (counts(date) && (!l.fixed_start || ym(l.fixed_start) <= m)) out.push({list: l, date, amount: n(l.fixed_amount)});
+  });
+  return out;
+}
+function potFor(P) {
+  // money collected for pay month P = everything earned in P-1 (from the start date) + fixed amounts landing on P's payday
+  const E = addM(P, -1);
+  const inE = x => ym(x.date) === E && counts(x.date);
+  const sh = S.shifts.filter(inE);
+  const earn = sh.reduce((a, x) => a + n(x.earnings), 0), wf = sh.reduce((a, x) => a + n(x.fuel_cost), 0);
+  const carCost = S.expenses.filter(inE).reduce((a, e) => a + expSplit(e).d, 0);
+  const lists = {};
+  S.income.filter(inE).forEach(i => { lists[i.list] = (lists[i.list] || 0) + n(i.amount); });
+  const fixed = fixedOccurrences(P);
+  const listTotal = Object.values(lists).reduce((a, v) => a + v, 0);
+  const fixedTotal = fixed.reduce((a, f) => a + f.amount, 0);
+  const drive = earn - wf - carCost;
+  // an advance taken during month E is paid back from the pay it was borrowed from
+  const advance = n((S.paydays.find(p => p.id === E) || {}).advance);
+  return {P, E, earn, wf, carCost, drive, lists, fixed, listTotal, fixedTotal, advance, total: r2(drive + listTotal + fixedTotal - advance)};
+}
+// A bill has a first due date and repeats every N months (0 = once). It counts in the month it is due.
+const billEvery = b => b.every == null ? 1 : n(b.every);
+const billFirst = b => b.date || ((b.start ? ym(b.start) : "2000-01") + "-" + String(n(b.day) || 1).padStart(2, "0"));
+function billDue(b, X) {
+  const d = billFirst(b), M = ym(d);
+  if (X < M || (b.end && ym(b.end) < X)) return null;
+  const k = (+X.slice(0, 4) - +M.slice(0, 4)) * 12 + (+X.slice(5, 7) - +M.slice(5, 7)), ev = billEvery(b);
+  if (ev === 0 ? k !== 0 : k % ev !== 0) return null;
+  if (ev && n(b.times) && k / ev >= n(b.times)) return null;
+  const dim = new Date(Date.UTC(+X.slice(0, 4), +X.slice(5, 7), 0)).getUTCDate();
+  return X + "-" + String(Math.min(+d.slice(8, 10) || 1, dim)).padStart(2, "0");
+}
+const repLabel = b => t("rep" + billEvery(b)) || (billEvery(b) + "×");
+// last month a repeating bill is due, from its number of payments or its last month
+const billLast = b => billEvery(b) && n(b.times) ? addM(ym(billFirst(b)), (n(b.times) - 1) * billEvery(b)) : (b.end || "");
+function billsFor(X) {
+  if (X <= zeroMonth()) return [];
+  return S.bills.filter(b => billDue(b, X));
+}
+function monthFor(X) {
+  const Z = zeroMonth();
+  const inX = x => ym(x.date) === X && counts(x.date);
+  const target = n(S.settings.salary);
+  const pd = S.paydays.find(p => p.id === X) || {};
+  const cover = n(pd.cover), advance = n(pd.advance);
+  let basePay, pot = null, toSave = 0, short = 0;
+  if (X === Z) basePay = n(S.settings.start_balance);
+  else { pot = potFor(X); basePay = Math.min(pot.total, target); toSave = Math.max(0, pot.total - target); short = Math.max(0, target - pot.total); }
+  const bills = billsFor(X).reduce((a, b) => a + n(b.amount), 0);
+  const exp = S.expenses.filter(inX).reduce((a, e) => a + expSplit(e).p, 0);
+  const fuelPaid = S.fuel.filter(inX).reduce((a, f) => a + n(f.sar), 0);
+  const workFuel = S.shifts.filter(inX).reduce((a, x) => a + n(x.fuel_cost), 0);
+  const persFuel = Math.max(0, fuelPaid - workFuel);
+  const spent = exp + persFuel;
+  const left = basePay + cover + advance - bills - spent;
+  return {X, zero: X === Z, basePay, pot, toSave, short, cover, advance, bills, exp, persFuel, spent, left: r2(left)};
+}
+function savingsNow() {
+  const Z = zeroMonth(), C = ym(today());
+  let s = 0;
+  for (let X = Z; X <= C; X = addM(X, 1)) {
+    const m = monthFor(X);
+    s += m.toSave - m.cover;
+    if (X < C) s += m.left;
+    if (X === "9999-12") break;
+  }
+  return r2(s);
+}
+function driveMonth(X) {
+  const sh = S.shifts.filter(x => ym(x.date) === X);
+  const apps = {};
+  sh.forEach(x => Object.entries(x.apps || {}).forEach(([k, v]) => { apps[k] = apps[k] || {sar: 0, trips: 0}; apps[k].sar += n(v.sar); apps[k].trips += n(v.trips); }));
+  const extra = sh.reduce((a, x) => a + n(x.tips) + n(x.bonuses), 0);
+  const earn = sh.reduce((a, x) => a + n(x.earnings), 0), wf = sh.reduce((a, x) => a + n(x.fuel_cost), 0);
+  const carCost = S.expenses.filter(e => ym(e.date) === X).reduce((a, e) => a + expSplit(e).d, 0);
+  const timed = sh.filter(x => n(x.hours) > 0);
+  const hours = timed.reduce((a, x) => a + n(x.hours), 0);
+  const km = sh.reduce((a, x) => a + n(x.work_km), 0);
+  return {count: sh.length, apps, extra, earn, wf, carCost, net: earn - wf - carCost, hours, perHour: hours ? timed.reduce((a, x) => a + n(x.earnings), 0) / hours : null, km};
+}
+function personalKm(X) {
+  const pts = [...S.shifts.flatMap(x => [{d: x.date, o: n(x.start_odo)}, {d: x.date, o: n(x.end_odo)}]), ...S.fuel.map(f => ({d: f.date, o: n(f.odo)})), ...S.odo.map(o => ({d: o.date, o: n(o.odo)}))].filter(p => p.o > 0);
+  const before = pts.filter(p => ym(p.d) < X).reduce((a, p) => Math.max(a, p.o), 0);
+  const inside = pts.filter(p => ym(p.d) === X);
+  if (!inside.length) return null;
+  const hi = inside.reduce((a, p) => Math.max(a, p.o), 0);
+  const lo = before || inside.reduce((a, p) => Math.min(a, p.o), Infinity);
+  const work = S.shifts.filter(x => ym(x.date) === X).reduce((a, x) => a + n(x.work_km), 0);
+  return Math.max(0, hi - lo - work);
+}
+
+/* ---------- views ---------- */
+const cur = () => { const c = S.settings.currency || "SAR"; return lang === "ar" && c === "SAR" ? "ر.س" : c; };
+function money(v, d) { return fmt(d > 2 ? n(v) : r2(v), d ?? 0) + " " + cur(); }
+function rowEl(k, v, cls) { return el("div", {class: "row" + (cls ? " " + cls : "")}, el("span", {text: k}), el("span", {text: v})); }
+function bigNum(v) { return el("div", {class: "big"}, fmt(r2(v), 0), el("small", {text: cur()})); }
+
+function renderHome() {
+  const C = ym(today()), Z = zeroMonth(), N = addM(C, 1);
+  const out = [];
+  if (!S.shifts.length && !S.expenses.length && !S.income.length && !S.fuel.length) out.push(el("div", {class: "card"}, el("p", {class: "hint", text: t("addFirst")})));
+
+  // Next month's pay
+  const pot = potFor(N), target = n(S.settings.salary);
+  const pct = target ? Math.min(100, pot.total / target * 100) : 0;
+  const potCard = el("section", {class: "card pot", id: "pot"},
+    el("div", {class: "lbl"}, svgEl(ICON.lock), el("span", {text: t("nextPay") + " · " + t("locked") + " " + dayName(N + "-01")})),
+    bigNum(pot.total),
+    el("div", {class: "track", role: "img", "aria-label": Math.round(pct) + "%"}, el("i", {style: "width:" + Math.max(0, pct) + "%"})),
+    el("div", {class: "row"}, el("span", {class: "muted", text: money(target) + " " + t("salaryGoal")}),
+      pot.total >= target ? el("span", {class: "good", text: "+" + money(pot.total - target) + " " + t("toSave")}) : el("span", {class: "warn", text: money(target - pot.total) + " " + t("toGo")})));
+  const brk = el("div", {class: "list"});
+  if (S.lists.some(l => l.kind === "driving") || pot.drive) brk.append(rowEl((drivingList().name || t("driving")) + " (" + t("afterCosts") + ")", money(pot.drive, 2)));
+  Object.entries(pot.lists).forEach(([id, v]) => brk.append(rowEl((S.lists.find(l => l.id === id) || {}).name || id, money(v, 2))));
+  pot.fixed.forEach(f => brk.append(rowEl(f.list.name + " (" + t("fixed") + ", " + dayName(f.date) + ")", money(f.amount, 2))));
+  if (pot.advance) brk.append(rowEl(t("advance"), "−" + money(pot.advance, 2), "warn"));
+  const dim = new Date(Date.UTC(+C.slice(0, 4), +C.slice(5, 7), 0)).getUTCDate();
+  const daysLeft = Math.max(1, dim - n(today().slice(8)) + 1);
+  if (pot.total < target) potCard.append(el("div", {class: "alert"}, el("span", {}, t("pace1") + " ", el("b", {text: money((target - pot.total) / daysLeft)}), " " + t("pace2").replace("{d}", daysLeft))));
+  potCard.append(brk);
+  out.push(potCard);
+
+  // This month
+  const m = monthFor(C);
+  const mc = el("section", {class: "card", id: "month"}, el("h2", {text: t("thisMonth") + " · " + monthName(C)}));
+  if (!m.zero && m.short > 0) {
+    const al = el("div", {class: "alert"}, el("span", {text: t("short") + " " + money(m.pot.total) + " · " + t("shortBy") + " " + money(m.short)}));
+    if (m.cover > 0) al.append(el("span", {class: "good", text: t("covered") + ": " + money(m.cover)}));
+    else if (!readOnly) al.append(el("button", {class: "btn ghost", type: "button", text: t("cover") + " (" + money(Math.min(m.short, Math.max(0, savingsNow()))) + ")", onclick: async () => {
+      const amt = Math.min(m.short, Math.max(0, savingsNow())); if (amt <= 0) return;
+      await write(() => coll("paydays").doc(C).set(pdPatch(C, {cover: r2(amt)}))); toast(t("saved"));
+    }}));
+    mc.append(al);
+  }
+  mc.append(el("div", {class: "lbl", text: t("left")}), bigNum(m.left));
+  const lst = el("div", {class: "list"});
+  lst.append(rowEl(m.zero ? t("firstSalary") : t("salary"), money(m.basePay, 2)));
+  if (m.cover) lst.append(rowEl(t("covered"), "+" + money(m.cover, 2)));
+  if (m.advance) lst.append(rowEl(t("advance"), "+" + money(m.advance, 2)));
+  if (m.bills) lst.append(rowEl(t("bills"), "−" + money(m.bills, 2)));
+  lst.append(rowEl(t("spent"), "−" + money(m.spent, 2)));
+  lst.append(rowEl(t("left"), money(m.left, 2), "t"));
+  mc.append(lst, el("p", {class: "hint", text: t("leftNote")}));
+  if (!readOnly) {
+    const room = Math.max(0, potFor(N).total);
+    const box = el("details", {class: "adv"}, el("summary", {text: t("takeAdv")}));
+    const af = el("form", {id: "form-advance"}, el("p", {class: "hint", text: t("advNote").replace("{x}", money(room))}), field("adv", t("amount"), "number", m.advance || ""),
+      el("button", {class: "btn ghost", type: "submit", text: t("save")}));
+    af.onsubmit = async ev => { ev.preventDefault(); const a = Math.max(0, n(num(af, "adv")));
+      await write(() => coll("paydays").doc(C).set(pdPatch(C, {advance: r2(a)}))); toast(t("saved")); };
+    box.append(af); mc.append(box);
+  }
+  out.push(mc);
+
+  // Savings + driving
+  const dm = driveMonth(C);
+  const sv = savingsNow(), cushion = target ? sv / target : 0;
+  const hasDriving = S.lists.some(l => l.kind === "driving");
+  out.push(el("div", {class: "grid2"},
+    el("div", {class: "stat"}, el("span", {class: "k", text: t("savings")}), el("span", {class: "v", text: money(sv)}),
+      el("span", {class: "k", text: t("cushion").replace("{m}", fmt(Math.max(0, cushion), 1))})),
+    el("div", {class: "stat"}, el("span", {class: "k", text: t("driveNet") + " · " + monthName(C)}), el("span", {class: "v", text: money(potFor(N).drive + potFor(N).listTotal)}))));
+
+  if (dm.count && hasDriving) {
+    const dc = el("section", {class: "card", id: "drive"}, el("h2", {text: (drivingList().name || t("driving")) + " · " + dm.count + " " + t("shifts").toLowerCase()}));
+    const bars = el("div", {class: "bars"});
+    const rows = Object.entries(dm.apps).map(([k, v]) => ({k, v: v.sar, note: v.trips ? v.trips + " " + t("trips") + " · " + money(v.sar / v.trips, 2) + t("perTrip") : ""}));
+    if (dm.extra) rows.push({k: t("tips") + " + " + t("bonuses"), v: dm.extra, note: ""});
+    const max = Math.max(1, ...rows.map(r => r.v));
+    rows.forEach(r => bars.append(el("div", {class: "bar"}, el("div", {class: "row"}, el("span", {}, r.k, " ", el("span", {class: "muted", text: r.note})), el("span", {text: money(r.v, 2)})), el("div", {class: "bt"}, el("i", {style: "width:" + (r.v / max * 100) + "%"})))));
+    dc.append(bars, el("div", {class: "grid2"},
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("earnings")}), el("span", {class: "v", text: money(dm.earn, 2)})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("fuelCost") + " + " + t("carCosts")}), el("span", {class: "v", text: "−" + money(dm.wf + dm.carCost, 2)})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("perHour")}), el("span", {class: "v", text: dm.perHour ? money(dm.perHour, 2) : "—"})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("workKm")}), el("span", {class: "v", text: fmt(dm.km, 0)}))));
+    out.push(dc);
+  }
+
+  // Car
+  const fs = fuelStats(), odo = latestOdo();
+  if (hasDriving && (odo || fs.count)) {
+    const s = S.settings;
+    const oilDue = n(s.oil_last_odo) + n(s.oil_interval_km);
+    const oilLeft = oilDue - odo;
+    let oilDate = "";
+    if (s.oil_last_date && n(s.oil_interval_months)) { const d = new Date(s.oil_last_date + "T12:00:00Z"); d.setUTCMonth(d.getUTCMonth() + n(s.oil_interval_months)); oilDate = d.toISOString().slice(0, 10); }
+    const pk = personalKm(C);
+    out.push(el("section", {class: "card", id: "car"}, el("h2", {text: t("car")}), el("div", {class: "grid2"},
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("kmL") + (n(s.saso_km_l) ? " · " + t("labFig") + " " + s.saso_km_l : "")}), el("span", {class: "v", text: fs.avg ? fmt(fs.avg, 2) : "—"})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("costKm")}), el("span", {class: "v", text: money(fs.costKm, 3)})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("oilIn")}), el("span", {class: "v " + (oilLeft <= 0 ? "bad" : oilLeft <= 500 ? "warn" : ""), text: fmt(Math.round(oilLeft), 0) + " km" + (oilDate ? " · " + dayName(oilDate) : "")})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("odo") + (pk != null ? " · " + t("personalKm") + " " + fmt(pk, 0) : "")}), el("span", {class: "v", text: fmt(odo, 1)}))),
+      el("p", {class: "hint", text: t("kmLnote") + (fs.lastFull ? " " + fmt(odo - n(fs.lastFull.odo), 1) + " km " + t("since") + (fs.openL ? " (+" + fmt(fs.openL, 2) + " L)" : "") : "")})));
+  }
+
+  // Spending
+  const cats = {};
+  S.expenses.filter(e => ym(e.date) === C).forEach(e => { const p = expSplit(e).p; if (p) cats[e.category || "Other"] = (cats[e.category || "Other"] || 0) + p; });
+  if (m.persFuel) cats["Fuel (personal)"] = m.persFuel;
+  const ce = Object.entries(cats).sort((a, b) => b[1] - a[1]);
+  if (ce.length) {
+    const bud = S.settings.budgets || {};
+    const max = Math.max(1, ...ce.map(([c, v]) => Math.max(v, n(bud[c]))));
+    const bars = el("div", {class: "bars"});
+    ce.forEach(([c, v]) => { const b = n(bud[c]), over = b && v > b;
+      const bt = el("div", {class: "bt"}, el("i", {style: "width:" + (v / max * 100) + "%;" + (over ? "background:var(--bad)" : "")}));
+      if (b) bt.append(el("b", {style: "inset-inline-start:" + (b / max * 100) + "%"}));
+      bars.append(el("div", {class: "bar"}, el("div", {class: "row"}, el("span", {}, catName(c), " ", b ? el("span", {class: over ? "bad" : "muted", text: t("budget") + " " + money(b)}) : ""), el("span", {text: money(v, 2)})), bt)); });
+    out.push(el("section", {class: "card", id: "spend"}, el("h2", {text: t("spending")}), bars));
+  }
+
+  // Bills for this month's and next month's salary, with Paid buttons
+  if (S.bills.length) {
+    const occ = [];
+    [C, N].forEach(X => billsFor(X).forEach(b => {
+      const due = billDue(b, X);
+      const paidMap = (S.paydays.find(p => p.id === X) || {}).paid || {};
+      occ.push({b, X, due, paid: !!paidMap[b.id], paidMap});
+    }));
+    occ.sort((a, b) => (a.paid - b.paid) || a.due.localeCompare(b.due));
+    const l = el("div", {class: "list"});
+    occ.forEach(o => {
+      const btn = el("button", {class: "icon-btn" + (o.paid ? " done" : ""), type: "button", "aria-pressed": String(o.paid), text: o.paid ? "✓ " + t("isPaid") : t("markPaid"), disabled: readOnly});
+      btn.onclick = async () => { const pm = {...o.paidMap}; if (o.paid) delete pm[o.b.id]; else pm[o.b.id] = true; await write(() => coll("paydays").doc(o.X).set(pdPatch(o.X, {paid: pm}))); };
+      l.append(el("div", {class: "it" + (o.paid ? " faded" : "")}, el("div", {class: "l"}, el("b", {text: o.b.name}), el("span", {text: dayName(o.due) + " · " + repLabel(o.b)})), el("div", {class: "r"}, el("span", {text: money(o.b.amount)}), btn)));
+    });
+    const due = occ.filter(o => !o.paid).reduce((a, o) => a + n(o.b.amount), 0);
+    if (occ.length) out.push(el("section", {class: "card", id: "bills"}, el("div", {class: "row"}, el("h2", {text: t("billsDue")}), el("span", {class: due ? "warn" : "good", text: t("stillDue") + ": " + money(due)})), l, el("p", {class: "hint", text: t("paysFrom")})));
+  }
+  return out;
+}
+
+/* ---------- forms ---------- */
+const field = (key, label, type = "text", value = "", opts = {}) => {
+  const id = "f-" + key;
+  if (type === "select") return el("div", {class: "f"}, el("label", {for: id, text: label}), el("select", {id, name: key}, ...opts.options.map(([v, l]) => el("option", {value: v, selected: String(v) === String(value), text: l}))));
+  if (type === "checkbox") return el("div", {class: "f chk"}, el("input", {id, name: key, type: "checkbox", checked: !!value}), el("label", {for: id, text: label}));
+  return el("div", {class: "f"}, el("label", {for: id, text: label}), el("input", {id, name: key, type, value: value ?? "", inputmode: type === "number" ? "decimal" : null, step: type === "number" ? "any" : null, placeholder: opts.ph || null}));
+};
+const val = (f, k) => { const e = f.elements[k]; if (!e) return undefined; if (e.type === "checkbox") return e.checked; return e.value.trim(); };
+const num = (f, k) => { const v = val(f, k); return v === "" || v === undefined ? null : +v; };
+const drivingList = () => S.lists.find(l => l.kind === "driving") || {apps: ["Uber", "Jeeny", "Bolt"]};
+
+function shiftForm(x = {}) {
+  const apps = (drivingList().apps || []).length ? drivingList().apps : ["Uber"];
+  const numIn = (name, v, ph, label) => el("input", {id: "f-" + name, name, type: "number", inputmode: "decimal", step: "any", value: v ?? "", placeholder: ph, "aria-label": label});
+  const startOdo = x.id ? x.start_odo : (latestOdo() || "");
+  const f = el("form", {id: "form-shift"},
+    field("date", t("date"), "date", x.date || today()),
+    el("div", {class: "apps"}, el("div", {class: "approw head"}, el("span", {}), el("span", {text: cur()}), el("span", {text: t("trips")})),
+      ...apps.map(a => el("div", {class: "approw"}, el("b", {text: a}), numIn("app_sar_" + a, (x.apps || {})[a]?.sar, "0", a + " " + cur()), numIn("app_trips_" + a, (x.apps || {})[a]?.trips, "0", a + " " + t("trips"))))),
+    el("div", {class: "fr"}, field("start_odo", t("startOdo"), "number", startOdo ?? ""), field("end_odo", t("endOdo"), "number", x.end_odo ?? "")),
+    el("details", {class: "more", open: !!(x.start || x.tips || x.bonuses || x.note)}, el("summary", {text: t("more")}),
+      el("div", {class: "fr"}, field("start", t("start"), "time", x.start || ""), field("end", t("end"), "time", x.end || "")),
+      el("div", {class: "fr"}, field("tips", t("tips"), "number", x.tips ?? ""), field("bonuses", t("bonuses"), "number", x.bonuses ?? "")),
+      field("note", t("note"), "text", x.note || "")));
+  // one shift per day: picking a date that already has a shift opens that day's shift
+  const sameDay = d => S.shifts.find(s => s.date === d && s.id !== editing);
+  f.elements.date.addEventListener("change", () => { const s = sameDay(f.elements.date.value); if (s) { editing = s.id; toast(t("dayExists")); render(); } });
+  if (x.id) f.prepend(el("p", {class: "hint", text: t("dayNote")}));
+  const calc = el("div", {class: "calc", id: "shiftcalc"});
+  const recalc = () => {
+    const fs = fuelStats();
+    const km = Math.max(0, n(num(f, "end_odo")) - n(num(f, "start_odo")));
+    const earn = apps.reduce((a, ap) => a + n(num(f, "app_sar_" + ap)), 0) + n(num(f, "tips")) + n(num(f, "bonuses"));
+    const fc = r2(km * fs.costKm);
+    calc.replaceChildren(rowEl(t("workKm"), fmt(km, 1)), rowEl(t("earnings"), money(earn, 2)), rowEl(t("fuelCost") + " (" + money(fs.costKm, 3) + "/km)", "−" + money(fc, 2)), rowEl(t("net"), money(earn - fc, 2), "t"));
+  };
+  f.addEventListener("input", recalc); recalc();
+  f.append(calc);
+  f.onsubmit = async ev => {
+    ev.preventDefault();
+    const so = num(f, "start_odo"), eo = num(f, "end_odo");
+    if (so != null && eo != null && eo < so) { toast(t("kmCheck")); return; }
+    const fs = fuelStats();
+    const appsV = {}; apps.forEach(a => { const s = num(f, "app_sar_" + a), tr = num(f, "app_trips_" + a); if (s || tr) appsV[a] = {sar: n(s), trips: n(tr)}; });
+    const km = so != null && eo != null ? r2(eo - so) : 0;
+    const earn = r2(Object.values(appsV).reduce((a, v) => a + v.sar, 0) + n(num(f, "tips")) + n(num(f, "bonuses")));
+    const st = val(f, "start"), en = val(f, "end");
+    let hours = null; if (st && en) { const [a, b] = st.split(":").map(Number), [c, d] = en.split(":").map(Number); let m = (c * 60 + d) - (a * 60 + b); if (m < 0) m += 1440; hours = r2(m / 60); }
+    const fuel_cost = r2(km * fs.costKm);
+    const doc = {date: val(f, "date"), start: st, end: en, hours, start_odo: so, end_odo: eo, work_km: km, apps: appsV, tips: n(num(f, "tips")), bonuses: n(num(f, "bonuses")), earnings: earn, fuel_cost, net: r2(earn - fuel_cost), cost_per_km: r2(fs.costKm * 10000) / 10000, note: val(f, "note")};
+    await saveDoc("shifts", doc);
+  };
+  return f;
+}
+function fuelForm(x = {}) {
+  const f = el("form", {id: "form-fuel"}, field("date", t("date"), "date", x.date || today()), field("odo", t("odo"), "number", x.odo ?? ""),
+    el("div", {class: "fr"}, field("liters", t("liters"), "number", x.liters ?? ""), field("sar", t("paid"), "number", x.sar ?? "")),
+    field("trip_km", t("tripKm"), "number", x.trip_km ?? ""), field("full", t("fullTank"), "checkbox", x.full ?? true), field("note", t("note"), "text", x.note || ""));
+  f.onsubmit = async ev => { ev.preventDefault();
+    let liters = num(f, "liters"); const sar = num(f, "sar");
+    if (!liters && sar && n(S.settings.fuel_price)) liters = r2(sar / n(S.settings.fuel_price));
+    if (!val(f, "date") || !sar) { toast(t("fillAll")); return; }
+    await saveDoc("fuel", {date: val(f, "date"), odo: num(f, "odo"), liters: n(liters), sar: n(sar), trip_km: num(f, "trip_km"), full: val(f, "full"), note: val(f, "note")}); };
+  return f;
+}
+function expenseForm(x = {}) {
+  const freq = {}; [...S.expenses].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 40).forEach(e => { freq[e.category] = (freq[e.category] || 0) + 1; });
+  const recent = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([c]) => c);
+  const lastCat = x.category || recent[0] || "Food & drinks";
+  const f = el("form", {id: "form-expense"}, field("amount", t("amount") + " (" + cur() + ")", "number", x.amount ?? ""),
+    recent.length ? el("div", {class: "seg chips"}, ...recent.map(c => el("button", {type: "button", "aria-pressed": String(c === lastCat), "data-cat": c, text: catName(c)}))) : null,
+    field("category", t("category"), "select", lastCat, {options: CATS.map(c => [c, catName(c)])}),
+    field("date", t("date"), "date", x.date || today()),
+    el("details", {class: "more", open: !!(x.note || (x.type && x.type !== "Personal"))}, el("summary", {text: t("moreExp")}),
+      field("type", t("type"), "select", x.type || "Personal", {options: [["Personal", t("personal")], ["Driving", t("driving")], ["Shared", t("shared")]]}),
+      field("work_share", t("workShare"), "number", x.work_share ?? ""), field("note", t("note"), "text", x.note || "")));
+  f.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => { f.elements.category.value = b.dataset.cat; f.querySelectorAll("[data-cat]").forEach(o => o.setAttribute("aria-pressed", String(o === b))); }));
+  f.elements.category.addEventListener("change", () => f.querySelectorAll("[data-cat]").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.cat === f.elements.category.value))));
+  f.onsubmit = async ev => { ev.preventDefault();
+    if (!val(f, "date") || !num(f, "amount")) { toast(t("fillAll")); return; }
+    await saveDoc("expenses", {date: val(f, "date"), amount: num(f, "amount"), category: val(f, "category"), type: val(f, "type"), work_share: val(f, "type") === "Shared" ? n(num(f, "work_share")) : (val(f, "type") === "Driving" ? 100 : 0), note: val(f, "note")}); };
+  return f;
+}
+function incomeForm(x = {}) {
+  const lists = S.lists.filter(l => l.kind !== "driving");
+  if (!lists.length) return el("p", {class: "hint", text: t("lists") + ": " + t("nothing")});
+  const f = el("form", {id: "form-income"}, field("list", t("list"), "select", x.list || lists[0].id, {options: lists.map(l => [l.id, l.name])}),
+    field("date", t("date"), "date", x.date || today()), field("amount", t("amount"), "number", x.amount ?? ""), field("note", t("note"), "text", x.note || ""));
+  f.onsubmit = async ev => { ev.preventDefault();
+    if (!val(f, "date") || !num(f, "amount")) { toast(t("fillAll")); return; }
+    await saveDoc("income", {list: val(f, "list"), date: val(f, "date"), amount: num(f, "amount"), note: val(f, "note")}); };
+  return f;
+}
+function odoForm(x = {}) {
+  const f = el("form", {id: "form-odo"}, field("date", t("date"), "date", x.date || today()), field("odo", t("odo"), "number", x.odo ?? ""), field("note", t("note"), "text", x.note || ""));
+  f.onsubmit = async ev => { ev.preventDefault(); if (!num(f, "odo")) { toast(t("fillAll")); return; } await saveDoc("odo", {date: val(f, "date"), odo: num(f, "odo"), note: val(f, "note")}); };
+  return f;
+}
+const FORMS = {shift: shiftForm, fuel: fuelForm, expenses: expenseForm, income: incomeForm, odo: odoForm};
+const KIND_COL = {shift: "shifts", fuel: "fuel", expenses: "expenses", income: "income", odo: "odo"};
+const KIND_LABEL = {shift: "shift", fuel: "fuel", expenses: "expense", income: "income", odo: "odoReading"};
+
+function renderAdd() {
+  const hasDriving = S.lists.some(l => l.kind === "driving");
+  const kinds = Object.keys(FORMS).filter(k => hasDriving || !["shift", "fuel", "odo"].includes(k));
+  if (!kinds.includes(addKind)) addKind = kinds[0];
+  const seg = el("div", {class: "seg", role: "group"}, ...kinds.map(k => el("button", {type: "button", "aria-pressed": String(addKind === k), text: t(KIND_LABEL[k]), onclick: () => { addKind = k; editing = null; try { localStorage.setItem("rateb-kind", k); } catch (e) {} render(); }})));
+  if (!editing && addKind === "shift") { const s = S.shifts.find(s => s.date === today()); if (s) editing = s.id; }
+  const x = editing ? (S[KIND_COL[addKind]].find(d => d.id === editing) || {}) : {};
+  const f = FORMS[addKind](x);
+  if (f.tagName === "FORM") {
+    f.append(el("div", {class: "fr"}, el("button", {class: "btn", type: "submit", text: editing ? t("update") : t("save"), disabled: readOnly}),
+      el("button", {class: "btn ghost", type: "button", text: t("cancel"), onclick: () => { editing = null; render(); }})));
+  }
+  return [el("section", {class: "card", id: "add"}, editing ? el("h2", {text: t("edit") + " · " + t(KIND_LABEL[addKind])}) : seg, f)];
+}
+
+/* ---------- history ---------- */
+function renderHistory() {
+  const M = histMonth || ym(today());
+  const nav = el("div", {class: "monthnav"},
+    el("button", {class: "chip", type: "button", text: "‹ " + t("prev"), onclick: () => { histMonth = addM(M, -1); render(); }}),
+    el("b", {text: monthName(M)}),
+    el("button", {class: "chip", type: "button", text: t("next") + " ›", onclick: () => { histMonth = addM(M, 1); render(); }}));
+  const items = [];
+  S.shifts.filter(x => ym(x.date) === M).forEach(x => items.push({kind: "shift", x, title: t("shift") + " · " + Object.keys(x.apps || {}).join(", "), sub: (x.work_km ? fmt(x.work_km, 1) + " km · " : "") + (x.hours ? fmt(x.hours, 2) + " h · " : "") + t("net") + " " + money(x.net, 2), amt: "+" + money(x.earnings, 2), cls: "good"}));
+  S.fuel.filter(x => ym(x.date) === M).forEach(x => items.push({kind: "fuel", x, title: t("fuel") + (x.full ? "" : " · " + (lang === "ar" ? "جزئية" : "partial")), sub: fmt(x.liters, 2) + " L" + (x.odo ? " · " + fmt(x.odo, 1) + " km" : ""), amt: "−" + money(x.sar, 2)}));
+  S.expenses.filter(x => ym(x.date) === M).forEach(x => items.push({kind: "expenses", x, title: catName(x.category) + (x.note ? " · " + x.note : ""), sub: (x.type === "Personal" ? t("personal") : x.type === "Driving" ? t("driving") : t("shared") + " " + x.work_share + "%"), amt: "−" + money(x.amount, 2)}));
+  S.income.filter(x => ym(x.date) === M).forEach(x => items.push({kind: "income", x, title: ((S.lists.find(l => l.id === x.list) || {}).name || t("income")) + (x.note ? " · " + x.note : ""), sub: "", amt: "+" + money(x.amount, 2), cls: "good"}));
+  S.odo.filter(x => ym(x.date) === M).forEach(x => items.push({kind: "odo", x, title: t("odoReading"), sub: x.note || "", amt: fmt(x.odo, 1) + " km"}));
+  items.sort((a, b) => String(b.x.date).localeCompare(String(a.x.date)) || String(b.x.start || "").localeCompare(String(a.x.start || "")));
+  const l = el("div", {class: "list"});
+  if (!items.length) l.append(el("div", {class: "empty", text: t("nothing")}));
+  items.forEach(it => {
+    const del = el("button", {class: "icon-btn", type: "button", text: t("del"), disabled: readOnly});
+    del.onclick = async () => { if (!del.classList.contains("sure")) { del.classList.add("sure"); del.textContent = t("sure"); setTimeout(() => { del.classList.remove("sure"); del.textContent = t("del"); }, 3000); return; }
+      await write(() => coll(KIND_COL[it.kind]).doc(it.x.id).delete()); toast(t("deleted")); };
+    const ed = el("button", {class: "icon-btn", type: "button", text: t("edit"), disabled: readOnly, onclick: () => { addKind = it.kind; editing = it.x.id; view = "add"; render(); }});
+    l.append(el("div", {class: "it"}, el("div", {class: "l"}, el("b", {text: it.title}), el("span", {text: dayName(it.x.date) + (it.sub ? " · " + it.sub : "")})),
+      el("div", {class: "r"}, el("span", {class: it.cls || "", text: it.amt}), ed, del)));
+  });
+  const m = monthFor(M);
+  const sum = el("div", {class: "list"});
+  if (M >= zeroMonth()) {
+    sum.append(rowEl(m.zero ? t("firstSalary") : t("salary"), money(m.basePay, 2)));
+    if (m.advance) sum.append(rowEl(t("advance"), "+" + money(m.advance, 2)));
+    if (m.toSave) sum.append(rowEl(t("savings") + " (" + t("payday") + ")", "+" + money(m.toSave, 2), "good"));
+    sum.append(rowEl(t("bills"), "−" + money(m.bills, 2)), rowEl(t("spent"), "−" + money(m.spent, 2)), rowEl(t("left"), money(m.left, 2), "t"));
+  }
+  return [el("section", {class: "card", id: "history"}, nav, M >= zeroMonth() ? sum : null), el("section", {class: "card"}, l)];
+}
+
+/* ---------- settings ---------- */
+function renderSettings() {
+  const s = S.settings, out = [];
+  const g = el("form", {id: "form-general"}, el("h2", {text: t("general")}),
+    field("salary", t("salaryAmt"), "number", s.salary), field("start_date", t("startDate"), "date", s.start_date), field("start_balance", t("startBal"), "number", s.start_balance),
+    field("currency", "Currency", "text", s.currency || "SAR"),
+    el("button", {class: "btn", type: "submit", text: t("save"), disabled: readOnly}));
+  g.onsubmit = async ev => { ev.preventDefault(); await saveSettings({salary: n(num(g, "salary")), start_date: val(g, "start_date") || today(), start_balance: n(num(g, "start_balance")), currency: val(g, "currency") || "SAR"}); };
+  out.push(el("section", {class: "card"}, g));
+
+  // your data
+  const dlb = el("button", {class: "btn", type: "button", text: t("dlBtn")}); dlb.onclick = () => downloadData(dlb);
+  const bkb = el("button", {class: "btn ghost", type: "button", text: t("bkBtn")}); bkb.onclick = downloadBackup;
+  const rsi = el("input", {type: "file", accept: ".json,application/json", hidden: true, disabled: readOnly});
+  const rsl = el("button", {class: "btn ghost", type: "button", text: t("bkRestore"), disabled: readOnly});
+  rsl.onclick = () => { if (!rsl.classList.contains("sure")) { rsl.classList.add("sure"); rsl.textContent = t("bkSure"); setTimeout(() => { rsl.classList.remove("sure"); rsl.textContent = t("bkRestore"); }, 4000); return; } rsi.click(); };
+  rsi.onchange = () => { const f = rsi.files && rsi.files[0]; if (f) restoreBackup(f); };
+  const pdb = el("button", {class: "btn ghost", type: "button", text: t("pdShow")}); pdb.onclick = () => { paydayForce = true; renderPayday(); };
+  out.push(el("section", {class: "card", id: "data"}, el("h2", {text: t("dataS")}), el("p", {class: "hint", text: t("dataTxt")}), dlb, bkb, el("p", {class: "hint", text: t("bkTxt")}), rsl, rsi, ym(today()) > zeroMonth() ? pdb : null));
+  if (window.ratebAuth) { const so = el("button", {class: "btn ghost", type: "button", text: t("signOut")}); so.onclick = () => window.ratebAuth.signOut();
+    out.push(el("section", {class: "card", id: "account"}, el("h2", {text: t("account")}), el("p", {class: "hint", text: t("signedAs") + " " + (window.ratebAuth.email() || "")}), so)); }
+
+  // lists
+  const ll = el("div", {class: "list"});
+  S.lists.forEach(l => ll.append(itemRow(l.name, l.kind === "driving" ? t("drivingList") + " · " + (l.apps || []).join(", ") : t("simpleList") + (n(l.fixed_amount) ? " · " + money(l.fixed_amount) + " · " + t("day") + " " + (l.fixed_day || 1) : ""), "", "lists", l.id)));
+  const lf = el("form", {id: "form-list"}, field("name", t("name"), "text", ""), field("kind", t("type"), "select", "simple", {options: [["simple", t("simpleList")], ["driving", t("drivingList")]]}),
+    field("apps", t("apps"), "text", "", {ph: "Uber, Jeeny, Bolt"}), el("div", {class: "fr"}, field("fixed_amount", t("fixedAmt"), "number", ""), field("fixed_day", t("fixedDay"), "number", "1")),
+    el("button", {class: "btn ghost", type: "submit", text: t("addList"), disabled: readOnly}));
+  lf.onsubmit = async ev => { ev.preventDefault(); if (!val(lf, "name")) return;
+    await write(() => coll("lists").add({name: val(lf, "name"), kind: val(lf, "kind"), apps: val(lf, "kind") === "driving" ? val(lf, "apps").split(/[,،]/).map(a => a.trim()).filter(Boolean) : [], fixed_amount: n(num(lf, "fixed_amount")), fixed_day: n(num(lf, "fixed_day")) || 1, fixed_start: s.start_date}));
+    toast(t("saved")); };
+  out.push(el("section", {class: "card"}, el("h2", {text: t("lists")}), ll, lf));
+
+  // bills
+  const bl = el("div", {class: "list"});
+  [...S.bills].sort((a, b) => billFirst(a).localeCompare(billFirst(b))).forEach(b => bl.append(itemRow(b.name, repLabel(b) + " · " + (billEvery(b) ? t("fromD") + " " : "") + dayName(billFirst(b)) + (billEvery(b) && n(b.times) ? " · " + n(b.times) + " " + t("nPay") : "") + (billEvery(b) && billLast(b) ? " · " + t("until") + " " + monthName(ym(billLast(b))) : ""), money(b.amount), "bills", b.id)));
+  const bf = el("form", {id: "form-bill"}, field("name", t("name"), "text", ""), el("div", {class: "fr"}, field("amount", t("amount"), "number", ""), field("date", t("billDate"), "date", today())),
+    el("div", {class: "fr"}, field("every", t("repeats"), "select", "1", {options: [0, 1, 2, 3, 6, 12].map(k => [k, t("rep" + k)])}), field("times", t("times"), "number", "", {ph: t("noEnd")})), el("button", {class: "btn ghost", type: "submit", text: t("addBill"), disabled: readOnly}));
+  bf.onsubmit = async ev => { ev.preventDefault(); if (!val(bf, "name") || !num(bf, "amount")) { toast(t("fillAll")); return; }
+    await write(() => coll("bills").add({name: val(bf, "name"), amount: num(bf, "amount"), date: val(bf, "date") || today(), every: n(val(bf, "every")), times: n(val(bf, "every")) ? Math.max(0, Math.round(n(num(bf, "times")))) : 0})); toast(t("saved")); };
+  out.push(el("section", {class: "card"}, el("h2", {text: t("billsS")}), bl, bf));
+
+  // car
+  const cf = el("form", {id: "form-car"}, el("h2", {text: t("carS")}),
+    el("div", {class: "fr"}, field("fuel_price", t("fuelPrice"), "number", s.fuel_price), field("saso_km_l", t("saso"), "number", s.saso_km_l)),
+    field("default_km_l", t("defKmL"), "number", s.default_km_l),
+    el("div", {class: "fr"}, field("oil_interval_km", t("oilEvery"), "number", s.oil_interval_km), field("oil_interval_months", t("oilMonths"), "number", s.oil_interval_months)),
+    el("div", {class: "fr"}, field("oil_last_odo", t("oilOdo"), "number", s.oil_last_odo), field("oil_last_date", t("oilDate"), "date", s.oil_last_date)),
+    el("button", {class: "btn", type: "submit", text: t("save"), disabled: readOnly}));
+  cf.onsubmit = async ev => { ev.preventDefault(); await saveSettings({fuel_price: n(num(cf, "fuel_price")), saso_km_l: n(num(cf, "saso_km_l")), default_km_l: n(num(cf, "default_km_l")) || 14, oil_interval_km: n(num(cf, "oil_interval_km")) || 5000, oil_interval_months: n(num(cf, "oil_interval_months")), oil_last_odo: n(num(cf, "oil_last_odo")), oil_last_date: val(cf, "oil_last_date")}); };
+  out.push(el("section", {class: "card"}, cf));
+
+  // budgets
+  const bud = s.budgets || {};
+  const bgf = el("form", {id: "form-budgets"}, el("h2", {text: t("budgets")}), el("div", {class: "fr"}, ...CATS.filter(c => !["Car wash", "Maintenance"].includes(c)).map(c => field("b_" + c, catName(c), "number", bud[c] ?? ""))),
+    el("button", {class: "btn", type: "submit", text: t("save"), disabled: readOnly}));
+  bgf.onsubmit = async ev => { ev.preventDefault(); const b = {}; CATS.forEach(c => { const v = num(bgf, "b_" + c); if (v) b[c] = v; }); await saveSettings({budgets: b}, true); };
+  out.push(el("section", {class: "card"}, bgf));
+  return out;
+}
+function itemRow(title, sub, amt, col, id) {
+  const del = el("button", {class: "icon-btn", type: "button", text: t("del"), disabled: readOnly});
+  del.onclick = async () => { if (!del.classList.contains("sure")) { del.classList.add("sure"); del.textContent = t("sure"); setTimeout(() => { del.classList.remove("sure"); del.textContent = t("del"); }, 3000); return; } await write(() => coll(col).doc(id).delete()); toast(t("deleted")); };
+  return el("div", {class: "it"}, el("div", {class: "l"}, el("b", {text: title}), el("span", {text: sub})), el("div", {class: "r"}, amt ? el("span", {text: amt}) : null, del));
+}
+
+/* ---------- store ---------- */
+const pdPatch = (X, patch) => { const o = {...(S.paydays.find(p => p.id === X) || {})}; delete o.id; return {...o, ...patch, at: new Date().toISOString()}; };
+const coll = name => db.doc(base).collection(name);
+async function write(fn) {
+  if (!db || readOnly) return;
+  try { await fn(); } catch (e) { if (e && e.code === "invalid_argument") { readOnly = true; render(); toast(t("readOnly")); } else toast((e && e.message) || "Error"); }
+}
+async function saveDoc(col, doc) {
+  await write(async () => { if (editing) await coll(col).doc(editing).set(doc); else await coll(col).add(doc); });
+  editing = null; toast(t("saved")); view = "home"; persistView(); render();
+}
+async function saveSettings(patch, replaceBudgets, quiet) {
+  const next = {...S.settings, ...patch}; if (replaceBudgets) next.budgets = patch.budgets;
+  await write(() => db.doc("data/users/" + uid + "/settings").set(next)); if (!quiet) toast(t("saved"));
+}
+
+/* ---------- first-time setup ---------- */
+function renderSetup() {
+  const f = el("form", {id: "form-setup"}, el("h2", {class: "welcome", text: t("welcome")}), el("p", {class: "hint", text: t("welcomeTxt")}),
+    field("start_balance", t("qHave"), "number", ""), field("salary", t("qSalary"), "number", ""), field("currency", "Currency", "text", "SAR"),
+    el("div", {class: "appbox"}, el("h3", {text: t("qFixed")}), el("div", {class: "fr"}, field("fx_name", t("qFixedName"), "text", ""), field("fx_amount", t("amount"), "number", "")), field("fx_day", t("fixedDay"), "number", "")),
+    el("div", {class: "appbox"}, el("h3", {text: t("qWork")}), field("w_name", t("qWorkName"), "text", ""), field("w_apps", t("apps"), "text", "", {ph: "Uber, Careem, Jahez"})),
+    field("others", t("qOther"), "text", ""),
+    el("button", {class: "btn", type: "submit", text: t("startBtn"), disabled: readOnly}));
+  f.onsubmit = async ev => { ev.preventDefault();
+    const salary = n(num(f, "salary")); if (!salary) { toast(t("fillAll")); return; }
+    const st = today();
+    await write(async () => {
+      if (val(f, "fx_name") && num(f, "fx_amount")) await coll("lists").add({name: val(f, "fx_name"), kind: "simple", apps: [], fixed_amount: n(num(f, "fx_amount")), fixed_day: n(num(f, "fx_day")) || 1, fixed_start: st});
+      if (val(f, "w_name") || val(f, "w_apps")) await coll("lists").add({name: val(f, "w_name") || t("driving"), kind: "driving", apps: (val(f, "w_apps") || "").split(/[,،]/).map(a => a.trim()).filter(Boolean), fixed_amount: 0, fixed_day: 1});
+      for (const nm of (val(f, "others") || "").split(/[,،]/).map(a => a.trim()).filter(Boolean)) await coll("lists").add({name: nm, kind: "simple", apps: [], fixed_amount: 0, fixed_day: 1});
+      await db.doc("data/users/" + uid + "/settings").set({...DEFAULTS, lang, start_date: st, start_balance: n(num(f, "start_balance")), salary, currency: val(f, "currency") || "SAR", oil_last_date: ""});
+    });
+    view = "home"; persistView();
+  };
+  return el("section", {class: "card"}, f);
+}
+
+/* ---------- payday moment ---------- */
+let paydayClosed = "", paydayForce = false;
+function paydayInfo() {
+  const C = ym(today()), Z = zeroMonth();
+  if (C <= Z) return null;
+  const pd = S.paydays.find(p => p.id === C) || {};
+  if (!paydayForce && (pd.seen || paydayClosed === C)) return null;
+  return {C, m: monthFor(C), prev: monthFor(addM(C, -1))};
+}
+function renderPayday() {
+  const old = $("#payday"); if (old) old.remove();
+  if (!S.ready || S.needsSetup) return;
+  const info = paydayInfo(); if (!info) return;
+  const {C, m, prev} = info, P = addM(C, -1);
+  const fill = (k, o) => t(k).replace("{s}", money(S.settings.salary)).replace("{m}", monthName(P));
+  const lines = el("div", {class: "lines"});
+  if (m.toSave > 0) lines.append(el("div", {}, el("span", {class: "plus", text: "+" + money(m.toSave) + " "}), fill("pdSaved")));
+  if (m.short > 0) lines.append(el("div", {}, fill("pdShort") + " ", el("span", {class: "minus", text: money(m.short)}), el("div", {class: "note", text: t("pdShortHint")})));
+  if (prev.left > 0) lines.append(el("div", {}, el("span", {class: "plus", text: "+" + money(prev.left) + " "}), fill("pdPrevLeft")));
+  if (prev.left < 0) lines.append(el("div", {}, fill("pdPrevOver") + " ", el("span", {class: "minus", text: money(-prev.left)}), el("div", {class: "note", text: t("pdPrevOverHint")})));
+  lines.append(rowEl(t("pdBills"), "−" + money(m.bills)), rowEl(t("pdToSpend"), money(m.basePay + m.cover + m.advance - m.bills), "t"), rowEl(t("pdSavings"), money(savingsNow())));
+  const go = el("button", {class: "btn", type: "button", text: t("pdGo")});
+  go.onclick = async () => { paydayClosed = C; const wasForced = paydayForce; paydayForce = false; renderPayday();
+    if (!wasForced && db && !readOnly) await write(() => coll("paydays").doc(C).set(pdPatch(C, {seen: true}))); };
+  const box = el("div", {class: "payday", id: "payday", role: "dialog", "aria-modal": "true", "aria-label": t("pdTitle")},
+    el("section", {class: "card"}, el("div", {class: "tag", text: t("pdTitle") + " · " + monthName(C)}), el("h2", {text: t("pdHere")}), bigNum(m.basePay), lines, go));
+  document.body.append(box); go.focus();
+}
+
+/* ---------- export ---------- */
+let xlsxLib = null;
+function loadXlsx() {
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  if (!xlsxLib) xlsxLib = new Promise((ok, bad) => { const sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"; sc.onload = () => ok(window.XLSX); sc.onerror = () => { xlsxLib = null; bad(new Error("load")); }; document.head.append(sc); });
+  return xlsxLib;
+}
+function exportSheets() {
+  const byDate = a => [...a].sort((x, y) => String(x.date).localeCompare(String(y.date)));
+  const listName = id => (S.lists.find(l => l.id === id) || {}).name || id || "";
+  const yn = v => v ? t("yes") : t("no");
+  const months = []; const Z = zeroMonth(), C = ym(today());
+  for (let X = Z; X <= C; X = addM(X, 1)) { const m = monthFor(X); months.push([X, r2(m.basePay), r2(m.toSave), r2(m.short), r2(m.cover), r2(m.advance), r2(m.bills), r2(m.spent), X < C ? m.left : ""]); if (X === "9999-12") break; }
+  const apps = [...new Set(S.shifts.flatMap(x => Object.keys(x.apps || {})))];
+  const work = byDate(S.shifts).map(x => [x.date, x.start || "", x.end || "", x.hours ?? "", x.start_odo ?? "", x.end_odo ?? "", n(x.work_km),
+    ...apps.flatMap(a => [n((x.apps || {})[a] && x.apps[a].sar), n((x.apps || {})[a] && x.apps[a].trips)]), n(x.tips), n(x.bonuses), n(x.earnings), n(x.fuel_cost), n(x.net), x.note || ""]);
+  return [
+    [t("shMonths"), [t("colMonth"), t("colSalary"), t("colToSave"), t("colShort"), t("covered"), t("advance"), t("bills"), t("spent"), t("colLeft")], months],
+    [t("shWork"), [t("colDate"), t("colStart"), t("colEnd"), t("colHours"), t("colStartOdo"), t("colEndOdo"), t("colKm"), ...apps.flatMap(a => [a + " (" + cur() + ")", a + " " + t("colJobs")]), t("colTips"), t("colBonus"), t("colEarn"), t("colFuelCost"), t("colNet"), t("colNote")], work],
+    [t("shIncome"), [t("colDate"), t("colList"), t("colAmount"), t("colNote")], byDate(S.income).map(x => [x.date, listName(x.list), n(x.amount), x.note || ""])],
+    [t("shExp"), [t("colDate"), t("colCat"), t("colType"), t("colShare"), t("colAmount"), t("colNote")], byDate(S.expenses).map(x => [x.date, catName(x.category), x.type === "Driving" ? t("driving") : x.type === "Shared" ? t("shared") : t("personal"), n(x.work_share), n(x.amount), x.note || ""])],
+    [t("shFuel"), [t("colDate"), t("colOdo"), t("colLiters"), t("colAmount"), t("colFull"), t("colNote")], byDate(S.fuel).map(x => [x.date, x.odo ?? "", n(x.liters), n(x.sar), yn(x.full), x.note || ""])],
+    [t("shBills"), [t("colName"), t("colAmount"), t("colFirst"), t("repeats"), t("colTimes"), t("colLast")], S.bills.map(b => [b.name, n(b.amount), billFirst(b), repLabel(b), n(b.times) || "", billLast(b) ? ym(billLast(b)) : ""])],
+    [t("shOdo"), [t("colDate"), t("colOdo"), t("colNote")], byDate(S.odo).map(x => [x.date, n(x.odo), x.note || ""])],
+    [t("shLists"), [t("colName"), t("colType"), t("colApps"), t("colFixed"), t("colFixedDay")], S.lists.map(l => [l.name, l.kind === "driving" ? t("drivingList") : t("simpleList"), (l.apps || []).join(", "), n(l.fixed_amount) || "", n(l.fixed_amount) ? (l.fixed_day || 1) : ""])]
+  ];
+}
+async function downloadData(btn) {
+  const dl = await claude.use("downloads");
+  if (!dl) { toast(t("dlNo")); return; }
+  const label = btn.textContent; btn.disabled = true; btn.textContent = t("dlWorking");
+  try {
+    const X = await loadXlsx();
+    const wb = X.utils.book_new(); if (lang === "ar") wb.Workbook = {Views: [{RTL: true}]};
+    exportSheets().forEach(([name, head, rows]) => { const ws = X.utils.aoa_to_sheet([head, ...rows]); ws["!cols"] = head.map(h => ({wch: Math.max(10, String(h).length + 2)})); X.utils.book_append_sheet(wb, ws, name.slice(0, 31)); });
+    const buf = X.write(wb, {bookType: "xlsx", type: "array"});
+    await dl.save({filename: "rateb-" + today() + ".xlsx", data: buf});
+  } catch (e) {
+    const c = e && e.code;
+    if (c !== "declined") toast(c === "unavailable" || c === "not_granted" ? t("dlNo") : t("dlFail"));
+  } finally { btn.disabled = false; btn.textContent = label; }
+}
+
+/* ---------- backup ---------- */
+function backupJson() {
+  const out = {app: "rateb", format: 1, exported: new Date().toISOString(), settings: {...S.settings}};
+  COLS.forEach(c => { out[c] = {}; S[c].forEach(d => { const {id, ...rest} = d; out[c][id] = rest; }); });
+  return JSON.stringify(out, null, 1);
+}
+async function downloadBackup() {
+  const dl = await claude.use("downloads");
+  if (!dl) { toast(t("dlNo")); return; }
+  try { await dl.save({filename: "rateb-backup-" + today() + ".json", data: backupJson()}); }
+  catch (e) { const c = e && e.code; if (c !== "declined") toast(c === "unavailable" || c === "not_granted" ? t("dlNo") : t("dlFail")); }
+}
+async function restoreBackup(file) {
+  let b; try { b = JSON.parse(await file.text()); } catch (e) { b = null; }
+  if (!b || b.app !== "rateb" || typeof b.settings !== "object") { toast(t("bkBad")); return; }
+  await write(async () => {
+    for (const c of COLS) for (const [id, d] of Object.entries(b[c] || {})) if (/^[A-Za-z0-9_\-.~:@+]{1,200}$/.test(id) && d && typeof d === "object") await coll(c).doc(id).set(d);
+    const {lang: _l, ...st} = b.settings; await db.doc("data/users/" + uid + "/settings").set({...DEFAULTS, ...st, lang});
+  });
+  toast(t("bkDone"));
+}
+
+/* ---------- shell ---------- */
+function persistView() { try { localStorage.setItem("rateb-view", view); } catch (e) {} }
+function renderNav() {
+  $("#nav").replaceChildren(...["home", "add", "history", "settings"].map(k => {
+    const b = el("button", {class: "tab", type: "button", "aria-current": view === k ? "page" : null, onclick: () => { view = k; if (k !== "add") editing = null; persistView(); render(); window.scrollTo(0, 0); }}, svgEl(ICON[k]), el("span", {text: t(k)}));
+    return b;
+  }));
+}
+function applyLang() {
+  document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  $("#brand").textContent = t("brand"); $("#langBtn").textContent = t("lang"); if (statusKey) $("#status").textContent = t(statusKey);
+}
+function render() {
+  applyLang(); renderNav();
+  if (!S.ready) return;
+  $("#fab").hidden = view === "add" || S.needsSetup || readOnly;
+  $(".nav").hidden = !!S.needsSetup;
+  if (S.needsSetup) { $("#view").replaceChildren(el("div", {style: "display:grid;gap:14px"}, renderSetup())); return; }
+  const v = {home: renderHome, add: renderAdd, history: renderHistory, settings: renderSettings}[view] || renderHome;
+  const keepScroll = view === "settings" ? window.scrollY : 0;
+  $("#view").replaceChildren(el("div", {style: "display:grid;gap:14px"}, ...v()));
+  if (keepScroll) window.scrollTo(0, keepScroll);
+  renderPayday();
+}
+$("#fab").addEventListener("click", () => { view = "add"; editing = null; persistView(); render(); window.scrollTo(0, 0); });
+$("#langBtn").addEventListener("click", async () => { lang = lang === "en" ? "ar" : "en"; langPinned = true; try { localStorage.setItem("rateb-lang", lang); } catch (e) {} render(); if (db && uid && !readOnly) saveSettings({lang}, false, true).catch(() => {}); });
+let langPinned = false;
+try { const l = localStorage.getItem("rateb-lang"); if (l === "ar" || l === "en") { lang = l; langPinned = true; } } catch (e) {}
+render();
+
+(async () => {
+  const status = $("#status");
+  const timer = setTimeout(() => { if (!S.ready) status.textContent = t("offline"); }, 10000);
+  db = await claude.use("db");
+  const user = await claude.use("user");
+  uid = user ? await user.id() : null;
+  if (!db || !uid) { clearTimeout(timer); status.textContent = t("signin"); $("#view").replaceChildren(el("div", {class: "card"}, el("p", {class: "hint", text: t("signin")}))); return; }
+  base = "data/users/" + uid + "/app";
+  const got = new Set();
+  const done = () => { if (got.size >= COLS.length + 1 && !S.ready) { S.ready = true; clearTimeout(timer); statusKey = "synced"; status.textContent = t("synced"); } render(); };
+  db.doc("data/users/" + uid + "/settings").onSnapshot(snap => {
+    S.settings = {...DEFAULTS, ...(snap.exists ? snap.data() : {})};
+    S.needsSetup = !snap.exists;
+    if (snap.exists && snap.data().lang && !langPinned) lang = snap.data().lang;
+    got.add("settings"); done();
+  }, err => { status.textContent = err.message; });
+  COLS.forEach(c => coll(c).onSnapshot(snap => {
+    S[c] = snap.docs.map(d => ({id: d.id, ...d.data()}));
+    got.add(c); done();
+  }, err => { status.textContent = err.message; }));
+})();
+</script>
