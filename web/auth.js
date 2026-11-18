@@ -17,7 +17,7 @@ import {firebaseConfig} from "./firebase-config.js";
 
 const T = {
   en: {
-    title: "Welcome to Rateb", lead: "Turn irregular income into a monthly salary. Sign in to keep your data safe and private.",
+    title: "Welcome to Rateb", lead: "Turn your driving income into a monthly salary. Sign in to keep your data safe and private.",
     google: "Continue with Google", or: "or", email: "Email", password: "Password",
     signIn: "Sign in", create: "Create account", toCreate: "New here? Create an account", toSignIn: "Have an account? Sign in",
     forgot: "Forgot password?", resetSent: "We sent a reset link to your email.", needEmail: "Type your email first.",
@@ -32,7 +32,7 @@ const T = {
     failed: "Sign-in didn't work. Try again.",
   },
   ar: {
-    title: "أهلًا بك في راتب", lead: "حوّل الدخل غير الثابت إلى راتب شهري. سجّل الدخول لتبقى بياناتك آمنة وخاصة.",
+    title: "أهلًا بك في راتب", lead: "حوّل دخلك من القيادة إلى راتب شهري. سجّل الدخول لتبقى بياناتك آمنة وخاصة.",
     google: "المتابعة باستخدام Google", or: "أو", email: "البريد الإلكتروني", password: "كلمة المرور",
     signIn: "تسجيل الدخول", create: "إنشاء حساب", toCreate: "جديد هنا؟ أنشئ حسابًا", toSignIn: "لديك حساب؟ سجّل الدخول",
     forgot: "نسيت كلمة المرور؟", resetSent: "أرسلنا رابط إعادة التعيين إلى بريدك.", needEmail: "اكتب بريدك أولًا.",

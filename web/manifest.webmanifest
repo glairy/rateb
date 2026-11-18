@@ -1,7 +1,7 @@
 {
   "name": "Rateb – pay yourself a salary",
   "short_name": "Rateb",
-  "description": "Turn irregular income into a monthly salary.",
+  "description": "Turn part-time driving income into a monthly salary.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

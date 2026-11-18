@@ -1,6 +1,6 @@
 # Rateb · راتب
 
-Rateb turns irregular income (freelance, delivery and ride-hailing apps, tutoring) into a steady monthly salary.
+Rateb is for people who drive for apps like Uber, Careem, Jeeny or Bolt in their free time. It turns that irregular driving income into a steady monthly salary. Other income, like a stipend, fits in too.
 
 - Everything you earn this month is locked as **next month's pay**.
 - On the 1st you pay yourself the salary you chose. Anything above it goes to savings.
