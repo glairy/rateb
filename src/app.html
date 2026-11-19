@@ -319,12 +319,12 @@ function savingsNow() {
   return r2(s);
 }
 function driveMonth(X) {
-  const sh = S.shifts.filter(x => ym(x.date) === X && counts(x.date));
+  const sh = S.shifts.filter(x => ym(x.date) === X);
   const apps = {};
   sh.forEach(x => Object.entries(x.apps || {}).forEach(([k, v]) => { apps[k] = apps[k] || {sar: 0, trips: 0}; apps[k].sar += n(v.sar); apps[k].trips += n(v.trips); }));
   const extra = sh.reduce((a, x) => a + n(x.tips) + n(x.bonuses), 0);
   const earn = sh.reduce((a, x) => a + n(x.earnings), 0), wf = sh.reduce((a, x) => a + n(x.fuel_cost), 0);
-  const carCost = S.expenses.filter(e => ym(e.date) === X && counts(e.date)).reduce((a, e) => a + expSplit(e).d, 0);
+  const carCost = S.expenses.filter(e => ym(e.date) === X).reduce((a, e) => a + expSplit(e).d, 0);
   const timed = sh.filter(x => n(x.hours) > 0);
   const hours = timed.reduce((a, x) => a + n(x.hours), 0);
   const km = sh.reduce((a, x) => a + n(x.work_km), 0);
@@ -419,7 +419,7 @@ function renderHome() {
     const max = Math.max(1, ...rows.map(r => r.v));
     rows.forEach(r => bars.append(el("div", {class: "bar"}, el("div", {class: "row"}, el("span", {}, r.k, " ", el("span", {class: "muted", text: r.note})), el("span", {text: money(r.v, 2)})), el("div", {class: "bt"}, el("i", {style: "width:" + (r.v / max * 100) + "%"})))));
     dc.append(bars, el("div", {class: "grid2"},
-      el("div", {class: "stat"}, el("span", {class: "k", text: t("earnings")}), el("span", {class: "v", text: money(dm.earn, 2)})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("earnings") + " · " + t("allOf") + " " + monthName(C)}), el("span", {class: "v", text: money(dm.earn, 2)})),
       el("div", {class: "stat"}, el("span", {class: "k", text: t("fuelCost") + " + " + t("carCosts")}), el("span", {class: "v", text: "−" + money(dm.wf + dm.carCost, 2)})),
       el("div", {class: "stat"}, el("span", {class: "k", text: t("profit")}), el("span", {class: "v", text: money(dm.net, 2)})),
       el("div", {class: "stat"}, el("span", {class: "k", text: t("perHour")}), el("span", {class: "v", text: dm.perHour ? money(dm.perHour, 2) : "—"})),
