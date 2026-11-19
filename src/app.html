@@ -706,7 +706,9 @@ function renderSettings() {
     el("div", {class: "fr"}, field("oil_interval_km", t("oilEvery"), "number", s.oil_interval_km), field("oil_interval_months", t("oilMonths"), "number", s.oil_interval_months)),
     el("div", {class: "fr"}, field("oil_last_odo", t("oilOdo"), "number", s.oil_last_odo), field("oil_last_date", t("oilDate"), "date", s.oil_last_date)));
   const carPatch = () => ({fuel_mode: val(cf, "fuel_mode") || "km", fuel_share: Math.min(100, Math.max(0, n(num(cf, "fuel_share")))), fuel_price: n(num(cf, "fuel_price")), saso_km_l: n(num(cf, "saso_km_l")), default_km_l: n(num(cf, "default_km_l")) || 14, oil_interval_km: n(num(cf, "oil_interval_km")) || 5000, oil_interval_months: n(num(cf, "oil_interval_months")), oil_last_odo: n(num(cf, "oil_last_odo")), oil_last_date: val(cf, "oil_last_date")});
+  cf.elements.fuel_mode.addEventListener("change", syncFuelShare);
   out.push(el("section", {class: "card"}, cf));
+  syncFuelShare(cf);
 
   // categories
   const catList = el("div", {class: "list"});
@@ -913,6 +915,15 @@ document.addEventListener("input", ev => { const e = ev.target; if (view !== "se
 document.addEventListener("change", ev => { const e = ev.target; if (view !== "settings" || !e.form || !e.name || !["form-general", "form-car", "form-cats", "form-budgets"].includes(e.form.id) || e.name === "new_cat") return; settingsDirty.set(e.form.id + "|" + e.name, e.type === "checkbox" ? e.checked : e.value); }, true);
 function restoreDirty() {
   settingsDirty.forEach((v, k) => { const [fid, nm] = k.split("|"); const f = document.getElementById(fid); const e = f && f.elements[nm]; if (!e) return; if (e.type === "checkbox") e.checked = v; else e.value = v; });
+  syncFuelShare();
+}
+// The fuel share % only matters when fuel is counted by a fixed share, so it is shown only then.
+function syncFuelShare(f) {
+  f = f instanceof HTMLFormElement ? f : document.getElementById("form-car");
+  if (!f) return;
+  const share = f.elements.fuel_mode.value === "share", box = f.elements.fuel_share.closest(".f");
+  box.hidden = !share;
+  box.parentElement.style.gridTemplateColumns = share ? "" : "1fr";
 }
 
 /* ---------- shell ---------- */
