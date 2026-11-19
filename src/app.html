@@ -467,7 +467,9 @@ function renderHome() {
 
   // Spending
   const cats = {};
-  S.expenses.filter(e => ym(e.date) === C).forEach(e => { const p = expSplit(e).p; if (p) cats[e.category || "Other"] = (cats[e.category || "Other"] || 0) + p; });
+  // Bill payments stay out of the bars (they live in Bills), and a deleted category's entries show under Other.
+  const shownCats = new Set(listedCats());
+  S.expenses.filter(e => ym(e.date) === C && !e.bill).forEach(e => { const p = expSplit(e).p; let k = e.category || "Other"; if (!shownCats.has(k)) k = "Other"; if (p) cats[k] = (cats[k] || 0) + p; });
   if (m.persFuel) cats["Fuel (personal)"] = m.persFuel;
   const ce = Object.entries(cats).sort((a, b) => b[1] - a[1]);
   if (ce.length) {
