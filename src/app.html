@@ -32,6 +32,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1
 .card .hint{margin:0;color:var(--muted);font-size:13px}
 .pot{background:linear-gradient(160deg,var(--gold-soft),var(--card) 70%);border-color:color-mix(in srgb,var(--gold) 35%,var(--line))}
 .lbl{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px}
+.sub{margin:0;font-size:14px;color:var(--ink)} .small{font-size:13px}
+.bigrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .lbl svg{width:14px;height:14px;flex:none}
 .big{font-family:var(--f-num);font-weight:600;font-size:44px;line-height:1.05;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .big small{font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--muted);margin-inline-start:6px;letter-spacing:0}
@@ -141,7 +143,7 @@ details.more summary{cursor:pointer;color:var(--accent);font-size:14px;font-weig
 /* ---------- i18n ---------- */
 const T = {
 en:{brand:"Rateb",home:"Home",add:"Add",history:"History",settings:"Settings",lang:"العربية",
- nextPay:"Next month's pay",locked:"Locked until",of:"of",salaryGoal:"salary goal",toSave:"extra goes to savings",toGo:"to reach your salary",
+ nowTitle:"This month's money",daysLeft:"{d} days left",perDay:"About {x} a day until {date}.",overNow:"You've spent more than this month's salary.",startMoney:"Starting money",salaryOf:"{m} salary",leftNote2:"Whatever is left on {date} goes to savings.",nextTitle:"Next month's salary",paidOn:"paid on {date}, locked until then",ofSalary:"of {x}",toGoShort:"to go",paceShort:"earn about {x} a day for {d} days",potDone:"Salary reached. Extra {x} goes to savings.",soFar:"So far",potNote:"Everything you earn this month builds next month's salary.",nextPay:"Next month's pay",locked:"Locked until",of:"of",salaryGoal:"salary goal",toSave:"extra goes to savings",toGo:"to reach your salary",
  thisMonth:"This month",salary:"Salary",startMoney:"Starting money",bills:"Bills",spent:"Spent",left:"Left to spend",
  leftNote:"Whatever is left on the last day goes to savings.",leftNoteZero:"Whatever is left on the last day is added to next month's pay.",carry:"Unspent starting money",firstSalary:"First salary (money you had at the start)",advance:"Advance from next month's pay",takeAdv:"Take an advance",advNote:"Borrow from next month's pay for this month. It comes off next month's pay. Available now: {x}.",dayExists:"You already have a shift on this day. Opened it so you can update it.",dayNote:"One shift per day. Update the day's totals: first start and last end odometer, and each app's total SAR and trips.",pace1:"Earn about",pace2:"a day for the next {d} days to hit your salary.",cushion:"Covers {m} months of salary",savings:"Savings",short:"Your pay for this month was",shortBy:"short of your salary by",
  cover:"Cover from savings",billsDue:"Bills",stillDue:"Still to pay",markPaid:"Paid?",isPaid:"Paid",forMonth:"for",prevMonth:"Paid at the end of the month before (from money that just arrived)",more:"More details (times, tips, bonuses, note)",moreKm:"More details (km, times, tips, bonuses, note)",fuelMode:"Count driving fuel by",fmKm:"Km on each driving day (most exact)",fmShare:"A fixed share of each fill-up",fmAll:"All fuel is for driving",fuelShare:"Driving share of fuel %",fuelFromFill:"Fuel comes off from your fill-ups, so you don't need km here.",moreExp:"More (type, note)",recent:"Recent",welcome:"Welcome to Rateb",welcomeTxt:"Rateb turns your driving income into a monthly salary. What you earn this month is locked and paid to you on the 1st. Anything extra goes to savings.",qHave:"How much money do you have right now to live on until the 1st?",qSalary:"What monthly salary do you want to pay yourself?",qFixed:"Do you get a fixed amount every month, like a stipend? (optional)",qFixedName:"Name, e.g. University",qWork:"Which driving apps do you use, like Uber, Careem, Jeeny or Bolt?",qWorkName:"List name, e.g. Driving",qOther:"Other income lists (optional, comma separated), e.g. Freelance, Tutoring",startBtn:"Start",afterCosts:"after costs",covered:"Covered from savings",driving:"Driving",earnings:"Earnings",workFuel:"Driving fuel",carCosts:"Car costs",profit:"Profit",
@@ -164,7 +166,7 @@ shMonths:"Months",shWork:"Driving days",shIncome:"Income",shExp:"Expenses",shFue
  kmCheck:"End odometer must be higher than start.",kmLnote:"Measured on full tanks only.",fills:"fill-ups",since:"since full",
  paysFrom:"Paid from that month's salary",addFirst:"Tap Add to log your first entry.",cats:{"Food & drinks":"Food & drinks","Groceries":"Groceries","Transport (non-work)":"Transport (non-work)","Phone/data":"Phone/data","Subscriptions":"Subscriptions","Health & dental":"Health & dental","Education":"Education","Clothes":"Clothes","Family":"Family","Entertainment":"Entertainment","Gifts":"Gifts","Debt/installments":"Debt/installments","Car wash":"Car wash","Maintenance":"Maintenance","Other":"Other","Fuel (personal)":"Fuel (personal)"}},
 ar:{brand:"راتب",home:"الرئيسية",add:"إضافة",history:"السجل",settings:"الإعدادات",lang:"English",
- nextPay:"راتب الشهر القادم",locked:"مقفل حتى",of:"من",salaryGoal:"هدف الراتب",toSave:"الزيادة تذهب للادخار",toGo:"للوصول إلى راتبك",
+ nowTitle:"فلوس هذا الشهر",daysLeft:"باقي {d} يوم",perDay:"حوالي {x} يوميًا حتى {date}.",overNow:"صرفت أكثر من راتب هذا الشهر.",startMoney:"المبلغ الذي بدأت به",salaryOf:"راتب {m}",leftNote2:"ما يتبقى في {date} يذهب للادخار.",nextTitle:"راتب الشهر القادم",paidOn:"يُصرف في {date} ومقفل حتى ذلك اليوم",ofSalary:"من {x}",toGoShort:"متبقي",paceShort:"اكسب حوالي {x} يوميًا لمدة {d} يوم",potDone:"وصلت لراتبك. الزيادة {x} تذهب للادخار.",soFar:"المجموع حتى الآن",potNote:"كل ما تكسبه هذا الشهر يكوّن راتب الشهر القادم.",nextPay:"راتب الشهر القادم",locked:"مقفل حتى",of:"من",salaryGoal:"هدف الراتب",toSave:"الزيادة تذهب للادخار",toGo:"للوصول إلى راتبك",
  thisMonth:"هذا الشهر",salary:"الراتب",startMoney:"المبلغ الابتدائي",bills:"الفواتير",spent:"المصروف",left:"المتبقي للصرف",
  leftNote:"ما يتبقى في آخر يوم يذهب للادخار.",leftNoteZero:"ما يتبقى في آخر يوم يُضاف إلى راتب الشهر القادم.",carry:"المبلغ الابتدائي غير المصروف",firstSalary:"أول راتب (المبلغ الذي كان معك)",advance:"سلفة من راتب الشهر القادم",takeAdv:"خذ سلفة",advNote:"استلف من راتب الشهر القادم لهذا الشهر. تُخصم من راتب الشهر القادم. المتاح الآن: {x}.",dayExists:"لديك وردية في هذا اليوم. تم فتحها لتحديثها.",dayNote:"وردية واحدة لكل يوم. حدّث إجمالي اليوم: أول عداد بداية وآخر عداد نهاية، وإجمالي كل تطبيق.",pace1:"اكسب حوالي",pace2:"يوميًا خلال {d} يومًا القادمة لتصل إلى راتبك.",cushion:"تكفي {m} شهر من الراتب",savings:"المدخرات",short:"راتب هذا الشهر كان",shortBy:"أقل من راتبك بـ",
  cover:"غطِّ من المدخرات",billsDue:"الفواتير",stillDue:"المتبقي للدفع",markPaid:"دُفعت؟",isPaid:"مدفوعة",forMonth:"لشهر",prevMonth:"تُدفع في نهاية الشهر السابق (من المبلغ الذي وصل)",more:"تفاصيل أكثر (الأوقات، البقشيش، المكافآت، ملاحظة)",moreKm:"تفاصيل أكثر (الكيلومترات، الأوقات، البقشيش، المكافآت، ملاحظة)",fuelMode:"احسب وقود القيادة حسب",fmKm:"الكيلومترات في كل يوم قيادة (الأدق)",fmShare:"نسبة ثابتة من كل تعبئة",fmAll:"كل الوقود للقيادة",fuelShare:"نسبة القيادة من الوقود %",fuelFromFill:"الوقود يُخصم من تعبئاتك، فلا تحتاج الكيلومترات هنا.",moreExp:"المزيد (النوع، ملاحظة)",recent:"الأخيرة",welcome:"أهلًا بك في راتب",welcomeTxt:"راتب يحوّل دخلك من القيادة إلى راتب شهري. ما تكسبه هذا الشهر يُقفل ويُصرف لك في يوم 1. وأي زيادة تذهب للادخار.",qHave:"كم معك الآن من المال لتعيش عليه حتى يوم 1؟",qSalary:"كم الراتب الشهري الذي تريد أن تدفعه لنفسك؟",qFixed:"هل لديك مبلغ ثابت كل شهر مثل المكافأة الجامعية؟ (اختياري)",qFixedName:"الاسم، مثل الجامعة",qWork:"ما تطبيقات التوصيل التي تعمل عليها، مثل أوبر وكريم وجيني وبولت؟",qWorkName:"اسم القائمة، مثل القيادة",qOther:"قوائم دخل أخرى (اختياري، مفصولة بفاصلة) مثل عمل حر، دروس خصوصية",startBtn:"ابدأ",afterCosts:"بعد المصاريف",covered:"تمت التغطية من المدخرات",driving:"قيادة",earnings:"الدخل",workFuel:"وقود القيادة",carCosts:"مصاريف السيارة",profit:"الربح",
@@ -382,29 +384,15 @@ function renderHome() {
   const out = [];
   if (!S.shifts.length && !S.expenses.length && !S.income.length && !S.fuel.length) out.push(el("div", {class: "card"}, el("p", {class: "hint", text: t("addFirst")})));
 
-  // Next month's pay
-  const pot = potFor(N), target = n(S.settings.salary);
-  const pct = target ? Math.min(100, pot.total / target * 100) : 0;
-  const potCard = el("section", {class: "card pot", id: "pot"},
-    el("div", {class: "lbl"}, svgEl(ICON.lock), el("span", {text: t("nextPay") + " · " + t("locked") + " " + dayName(N + "-01")})),
-    bigNum(pot.total),
-    el("div", {class: "track", role: "img", "aria-label": Math.round(pct) + "%"}, el("i", {style: "width:" + Math.max(0, pct) + "%"})),
-    el("div", {class: "row"}, el("span", {class: "muted", text: money(target) + " " + t("salaryGoal")}),
-      pot.total >= target ? el("span", {class: "good", text: "+" + money(pot.total - target) + " " + t("toSave")}) : el("span", {class: "warn", text: money(target - pot.total) + " " + t("toGo")})));
-  const brk = el("div", {class: "list"});
-  if (S.lists.some(l => l.kind === "driving") || pot.drive) brk.append(rowEl((drivingList().name || t("driving")) + " (" + t("afterCosts") + ")", money(pot.drive, 2)));
-  Object.entries(pot.lists).forEach(([id, v]) => brk.append(rowEl((S.lists.find(l => l.id === id) || {}).name || id, money(v, 2))));
-  pot.fixed.forEach(f => brk.append(rowEl(f.list.name + " (" + t("fixed") + ", " + dayName(f.date) + ")", money(f.amount, 2))));
-  if (pot.advance) brk.append(rowEl(t("advance"), "−" + money(pot.advance, 2), "warn"));
+  const target = n(S.settings.salary);
   const dim = new Date(Date.UTC(+C.slice(0, 4), +C.slice(5, 7), 0)).getUTCDate();
   const daysLeft = Math.max(1, dim - n(today().slice(8)) + 1);
-  if (pot.total < target) potCard.append(el("div", {class: "alert"}, el("span", {}, t("pace1") + " ", el("b", {text: money((target - pot.total) / daysLeft)}), " " + t("pace2").replace("{d}", daysLeft))));
-  potCard.append(brk);
-  out.push(potCard);
+  const lastDay = dayName(C + "-" + String(dim).padStart(2, "0")), payDay = dayName(N + "-01");
 
-  // This month
+  // 1) Money to spend now: this month's salary minus bills and spending
   const m = monthFor(C);
-  const mc = el("section", {class: "card", id: "month"}, el("h2", {text: t("thisMonth") + " · " + monthName(C)}));
+  const mc = el("section", {class: "card", id: "month"},
+    el("h2", {text: t("nowTitle")}), el("div", {class: "lbl", text: monthName(C) + " · " + t("daysLeft").replace("{d}", daysLeft)}));
   if (!m.zero && m.short > 0) {
     const al = el("div", {class: "alert"}, el("span", {text: t("short") + " " + money(m.pot.total) + " · " + t("shortBy") + " " + money(m.short)}));
     if (m.cover > 0) al.append(el("span", {class: "good", text: t("covered") + ": " + money(m.cover)}));
@@ -414,15 +402,17 @@ function renderHome() {
     }}));
     mc.append(al);
   }
-  mc.append(el("div", {class: "lbl", text: t("left")}), bigNum(m.left));
+  mc.append(bigNum(m.left));
+  if (m.left > 0) mc.append(el("p", {class: "sub", text: t("perDay").replace("{x}", money(m.left / daysLeft)).replace("{date}", lastDay)}));
+  else mc.append(el("p", {class: "sub bad", text: t("overNow")}));
   const lst = el("div", {class: "list"});
-  lst.append(rowEl(m.zero ? t("firstSalary") : t("salary"), money(m.basePay, 2)));
+  lst.append(rowEl(m.zero ? t("startMoney") : t("salaryOf").replace("{m}", monthName(C)), money(m.basePay, 2)));
   if (m.cover) lst.append(rowEl(t("covered"), "+" + money(m.cover, 2)));
   if (m.advance) lst.append(rowEl(t("advance"), "+" + money(m.advance, 2)));
   if (m.bills) lst.append(rowEl(t("bills"), "−" + money(m.bills, 2)));
   lst.append(rowEl(t("spent"), "−" + money(m.spent, 2)));
   lst.append(rowEl(t("left"), money(m.left, 2), "t"));
-  mc.append(lst, el("p", {class: "hint", text: t("leftNote")}));
+  mc.append(lst, el("p", {class: "hint", text: t("leftNote2").replace("{date}", lastDay)}));
   if (!readOnly) {
     const room = Math.max(0, potFor(N).total);
     const box = el("details", {class: "adv"}, el("summary", {text: t("takeAdv")}));
@@ -433,6 +423,24 @@ function renderHome() {
     box.append(af); mc.append(box);
   }
   out.push(mc);
+
+  // 2) Next salary: what you earn this month, locked until the 1st
+  const pot = potFor(N);
+  const pct = target ? Math.min(100, pot.total / target * 100) : 0;
+  const potCard = el("section", {class: "card pot", id: "pot"},
+    el("h2", {text: t("nextTitle")}), el("div", {class: "lbl"}, svgEl(ICON.lock), el("span", {text: monthName(N) + " · " + t("paidOn").replace("{date}", payDay)})),
+    el("div", {class: "bigrow"}, bigNum(pot.total), el("span", {class: "muted", text: t("ofSalary").replace("{x}", money(target))})),
+    el("div", {class: "track", role: "img", "aria-label": Math.round(pct) + "%"}, el("i", {style: "width:" + Math.max(0, pct) + "%"})));
+  if (pot.total >= target) potCard.append(el("p", {class: "sub good", text: t("potDone").replace("{x}", money(pot.total - target))}));
+  else potCard.append(el("p", {class: "sub"}, el("b", {class: "warn", text: money(target - pot.total) + " " + t("toGoShort")}), " · " + t("paceShort").replace("{x}", money((target - pot.total) / daysLeft)).replace("{d}", daysLeft)));
+  const brk = el("div", {class: "list"});
+  if (S.lists.some(l => l.kind === "driving") || pot.drive) brk.append(rowEl((drivingList().name || t("driving")) + " (" + t("afterCosts") + ")", money(pot.drive, 2)));
+  Object.entries(pot.lists).forEach(([id, v]) => brk.append(rowEl((S.lists.find(l => l.id === id) || {}).name || id, money(v, 2))));
+  pot.fixed.forEach(f => brk.append(rowEl(f.list.name + " (" + dayName(f.date) + ")", money(f.amount, 2))));
+  if (pot.advance) brk.append(rowEl(t("advance"), "−" + money(pot.advance, 2), "warn"));
+  brk.append(rowEl(t("soFar"), money(pot.total, 2), "t"));
+  potCard.append(brk, el("p", {class: "hint", text: t("potNote").replace("{date}", payDay)}));
+  out.push(potCard);
 
   // Savings + driving
   const dm = driveMonth(C);
