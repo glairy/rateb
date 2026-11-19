@@ -145,7 +145,7 @@ shMonths:"Months",shWork:"Driving days",shIncome:"Income",shExp:"Expenses",shFue
  saso:"Official km/L",defKmL:"km/L to use before your first measured tank",oilEvery:"Oil change every (km)",oilMonths:"or every (months)",
  oilOdo:"Odometer at last oil change",oilDate:"Date of last oil change",budgets:"Monthly budgets",signin:"Sign in to claude.ai to use your money app.",
  synced:"Saved to your account",offline:"Can't reach your data yet. Check your connection.",payday:"Payday",fixed:"fixed",
- driveNet:"Earned",monthZero:"Your first month: you're living on your starting money while next month's pay builds up.",
+ driveNet:"Earned",sinceD:"since",allOf:"all of",monthZero:"Your first month: you're living on your starting money while next month's pay builds up.",
  prev:"Previous",next:"Next",readOnly:"You can view this page but not save to it.",perTrip:"/trip",fillAll:"Fill in date and amount.",
  kmCheck:"End odometer must be higher than start.",kmLnote:"Measured on full tanks only.",fills:"fill-ups",since:"since full",
  paysFrom:"Paid from that month's salary",addFirst:"Tap Add to log your first entry.",cats:{"Food & drinks":"Food & drinks","Groceries":"Groceries","Transport (non-work)":"Transport (non-work)","Phone/data":"Phone/data","Subscriptions":"Subscriptions","Health & dental":"Health & dental","Education":"Education","Clothes":"Clothes","Family":"Family","Entertainment":"Entertainment","Gifts":"Gifts","Debt/installments":"Debt/installments","Car wash":"Car wash","Maintenance":"Maintenance","Other":"Other","Fuel (personal)":"Fuel (personal)"}},
@@ -168,7 +168,7 @@ shMonths:"الأشهر",shWork:"أيام القيادة",shIncome:"الدخل",s
  saso:"الاستهلاك الرسمي كم/لتر",defKmL:"كم/لتر قبل أول قياس",oilEvery:"تغيير الزيت كل (كم)",oilMonths:"أو كل (شهر)",
  oilOdo:"العداد عند آخر تغيير زيت",oilDate:"تاريخ آخر تغيير زيت",budgets:"الميزانيات الشهرية",signin:"سجّل الدخول إلى claude.ai لاستخدام التطبيق.",
  synced:"محفوظ في حسابك",offline:"تعذر الوصول إلى بياناتك. تحقق من الاتصال.",payday:"يوم الراتب",fixed:"ثابت",
- driveNet:"المكسب",monthZero:"شهرك الأول: تعيش على المبلغ الابتدائي بينما يتجمع راتب الشهر القادم.",
+ driveNet:"المكسب",sinceD:"منذ",allOf:"كل",monthZero:"شهرك الأول: تعيش على المبلغ الابتدائي بينما يتجمع راتب الشهر القادم.",
  prev:"السابق",next:"التالي",readOnly:"يمكنك عرض الصفحة فقط.",perTrip:"/رحلة",fillAll:"أدخل التاريخ والمبلغ.",
  kmCheck:"عداد النهاية يجب أن يكون أكبر من البداية.",kmLnote:"يُقاس على التعبئات الكاملة فقط.",fills:"تعبئات",since:"منذ آخر تعبئة كاملة",
  paysFrom:"تُدفع من راتب ذلك الشهر",addFirst:"اضغط إضافة لتسجيل أول عملية.",cats:{"Food & drinks":"أكل ومشروبات","Groceries":"بقالة","Transport (non-work)":"مواصلات (غير العمل)","Phone/data":"جوال وإنترنت","Subscriptions":"اشتراكات","Health & dental":"صحة وأسنان","Education":"تعليم","Clothes":"ملابس","Family":"العائلة","Entertainment":"ترفيه","Gifts":"هدايا","Debt/installments":"ديون وأقساط","Car wash":"غسيل السيارة","Maintenance":"صيانة","Other":"أخرى","Fuel (personal)":"وقود (شخصي)"}}
@@ -411,7 +411,7 @@ function renderHome() {
   out.push(el("div", {class: "grid2"},
     el("div", {class: "stat"}, el("span", {class: "k", text: t("savings")}), el("span", {class: "v", text: money(sv)}),
       el("span", {class: "k", text: t("cushion").replace("{m}", fmt(Math.max(0, cushion), 1))})),
-    el("div", {class: "stat"}, el("span", {class: "k", text: t("driveNet") + " · " + monthName(C)}), el("span", {class: "v", text: money(potFor(N).drive + potFor(N).listTotal)}))));
+    el("div", {class: "stat"}, el("span", {class: "k", text: t("driveNet") + " · " + (ym(S.settings.start_date || "") === C ? t("sinceD") + " " + dayName(S.settings.start_date) : monthName(C)) + " (" + t("afterCosts") + ")"}), el("span", {class: "v", text: money(potFor(N).drive + potFor(N).listTotal)}))));
 
   if (dm.count && hasDriving) {
     const dc = el("section", {class: "card", id: "drive"}, el("h2", {text: (drivingList().name || t("driving")) + " · " + dm.count + " " + t("shifts").toLowerCase()}));
@@ -421,7 +421,7 @@ function renderHome() {
     const max = Math.max(1, ...rows.map(r => r.v));
     rows.forEach(r => bars.append(el("div", {class: "bar"}, el("div", {class: "row"}, el("span", {}, r.k, " ", el("span", {class: "muted", text: r.note})), el("span", {text: money(r.v, 2)})), el("div", {class: "bt"}, el("i", {style: "width:" + (r.v / max * 100) + "%"})))));
     dc.append(bars, el("div", {class: "grid2"},
-      el("div", {class: "stat"}, el("span", {class: "k", text: t("earnings")}), el("span", {class: "v", text: money(dm.earn, 2)})),
+      el("div", {class: "stat"}, el("span", {class: "k", text: t("earnings") + " · " + t("allOf") + " " + monthName(C)}), el("span", {class: "v", text: money(dm.earn, 2)})),
       el("div", {class: "stat"}, el("span", {class: "k", text: t("fuelCost") + " + " + t("carCosts")}), el("span", {class: "v", text: "−" + money(dm.wf + dm.carCost, 2)})),
       el("div", {class: "stat"}, el("span", {class: "k", text: t("perHour")}), el("span", {class: "v", text: dm.perHour ? money(dm.perHour, 2) : "—"})),
       el("div", {class: "stat"}, el("span", {class: "k", text: t("workKm")}), el("span", {class: "v", text: fmt(dm.km, 0)}))));
