@@ -441,7 +441,7 @@ function renderHome() {
     if (pot.carCost) brk.append(rowEl(t("carCosts"), "−" + money(pot.carCost, 2)));
   }
   Object.entries(pot.lists).forEach(([id, v]) => brk.append(rowEl((S.lists.find(l => l.id === id) || {}).name || id, money(v, 2))));
-  pot.fixed.forEach(f => brk.append(rowEl(f.list.name + " (" + dayName(f.date) + ")", money(f.amount, 2))));
+  pot.fixed.forEach(f => brk.append(rowEl(f.list.name, money(f.amount, 2))));
   if (pot.advance) brk.append(rowEl(t("advance"), "−" + money(pot.advance, 2), "warn"));
   brk.append(rowEl(t("soFar"), money(pot.total, 2), "t"));
   potCard.append(brk, el("p", {class: "hint", text: t("potNote").replace("{date}", payDay)}));
