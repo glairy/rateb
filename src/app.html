@@ -574,7 +574,7 @@ function fuelForm(x = {}) {
 }
 function expenseForm(x = {}) {
   const freq = {}; [...S.expenses].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 40).forEach(e => { freq[e.category] = (freq[e.category] || 0) + 1; });
-  const recent = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([c]) => c);
+  const recent = Object.entries(freq).filter(([c]) => activeCats().includes(c)).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([c]) => c);
   const lastCat = x.category || recent.find(c => activeCats().includes(c)) || activeCats()[0] || "Other";
   const f = el("form", {id: "form-expense"}, field("amount", t("amount") + " (" + cur() + ")", "number", x.amount ?? ""),
     recent.length ? el("div", {class: "seg chips"}, ...recent.map(c => el("button", {type: "button", "aria-pressed": String(c === lastCat), "data-cat": c, text: catName(c)}))) : null,
