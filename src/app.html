@@ -101,6 +101,8 @@ details.more summary{cursor:pointer;color:var(--accent);font-size:14px;font-weig
 .unsaved{color:var(--warn,#d9a03a);font-size:13px;margin:0 0 8px;text-align:center}
 .addrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
 .saveall{margin-top:4px}
+.discard{margin-top:8px}
+.discard .btn{width:100%}
 .saveall .btn{width:100%}
 .catrow input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent)}
 .catrow input[type=text]{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;width:100%;min-width:0}
@@ -152,7 +154,7 @@ en:{brand:"Rateb",home:"Home",add:"Add",history:"History",settings:"Settings",la
  billsS:"Bills and installments",day:"Due day",endMonth:"Last month (optional)",billDate:"Due date",repeats:"Repeats",rep0:"Once",rep1:"Every month",rep2:"Every 2 months",rep3:"Every 3 months",rep6:"Every 6 months",rep12:"Every year",fromD:"from",until:"until",pdTitle:"Payday",pdHere:"Your salary is here",pdSaved:"extra went to savings",pdShort:"Your pay was short of your {s} salary by",pdShortHint:"You can cover it from savings on the home screen.",pdPrevLeft:"left over from {m} also went to savings",pdPrevOver:"{m} went over by",pdPrevOverHint:"It came out of savings.",pdBills:"Bills this month",pdToSpend:"Yours to spend",pdSavings:"Savings now",pdGo:"Let's go",pdShow:"Show payday screen",dataS:"Your data",dataTxt:"Download everything you logged as a spreadsheet. Each list gets its own sheet.",dlBtn:"Download spreadsheet (.xlsx)",dlFail:"Download didn't work. Try again.",dlNo:"Downloads aren't available here.",dlWorking:"Preparing…",bkBtn:"Download backup (.json)",bkRestore:"Restore a backup",bkSure:"Tap again to restore",bkDone:"Backup restored",bkBad:"That file isn't a Rateb backup.",bkTxt:"A backup holds everything, so you can move your data to another account or device.",account:"Account",signOut:"Sign out",signedAs:"Signed in as",
 shMonths:"Months",shWork:"Driving days",shIncome:"Income",shExp:"Expenses",shFuel:"Fuel",shBills:"Bills",shOdo:"Odometer",shLists:"Lists",colMonth:"Month",colSalary:"Salary paid",colToSave:"Extra to savings",colShort:"Short",colLeft:"Left (to savings)",colDate:"Date",colStart:"Start",colEnd:"End",colHours:"Hours",colStartOdo:"Start odometer",colEndOdo:"End odometer",colKm:"Driving km",colJobs:"trips",colTips:"Tips",colBonus:"Bonuses",colEarn:"Earnings",colFuelCost:"Driving fuel",colNet:"Net",colNote:"Note",colList:"List",colAmount:"Amount",colCat:"Category",colType:"Type",colShare:"Driving share %",colOdo:"Odometer",colLiters:"Liters",colFull:"Full tank",colFirst:"First due date",colTimes:"Payments",colLast:"Last month",colName:"Name",colApps:"Apps",colFixed:"Fixed amount",colFixedDay:"Fixed day",yes:"Yes",no:"No",times:"Number of payments",noEnd:"No end",nPay:"payments",addBill:"Add bill",carS:"Car",fuelPrice:"Fuel price (SAR/L)",
  saso:"Official km/L",defKmL:"km/L to use before your first measured tank",oilEvery:"Oil change every (km)",oilMonths:"or every (months)",
- oilOdo:"Odometer at last oil change",oilDate:"Date of last oil change",budgets:"Monthly budgets",catsS:"Categories",catsBud:"Categories & budgets",budgetM:"Budget / month",catsHint:"Type to rename, and set a monthly budget on the right (leave it empty for none). To delete, tick categories and tap Delete selected. Nothing changes until you tap Save all settings. Past entries keep their category.",catDelSel:"Delete selected",catSure:"Tap again to delete",catPending:"Tap Save all settings at the bottom to keep this.",catUnsaved:"You have changes that aren't saved yet.",saveAll:"Save all settings",catPick:"Tick the categories you want to delete first.",newCat:"New category",addCat:"Add category",catDel:"Delete",catInUse:"Deleted. Past entries keep this category.",catRestore:"Bring back deleted categories",signin:"Sign in to claude.ai to use your money app.",
+ oilOdo:"Odometer at last oil change",oilDate:"Date of last oil change",budgets:"Monthly budgets",catsS:"Categories",catsBud:"Categories & budgets",budgetM:"Budget / month",catsHint:"Type to rename, and set a monthly budget on the right (leave it empty for none). To delete, tick categories and tap Delete selected. Nothing changes until you tap Save all settings. Past entries keep their category.",catDelSel:"Delete selected",catSure:"Tap again to delete",catPending:"Tap Save all settings at the bottom to keep this.",notSaved:"not saved yet",discard:"Discard changes",discarded:"Changes discarded",catUnsaved:"You have changes that aren't saved yet.",saveAll:"Save all settings",catPick:"Tick the categories you want to delete first.",newCat:"New category",addCat:"Add category",catDel:"Delete",catInUse:"Deleted. Past entries keep this category.",catRestore:"Bring back deleted categories",signin:"Sign in to claude.ai to use your money app.",
  synced:"Saved to your account",offline:"Can't reach your data yet. Check your connection.",payday:"Payday",fixed:"fixed",
  driveNet:"Earned",sinceD:"since",allOf:"all of",monthZero:"Your first month: you're living on your starting money while next month's pay builds up.",
  prev:"Previous",next:"Next",readOnly:"You can view this page but not save to it.",perTrip:"/trip",fillAll:"Fill in date and amount.",
@@ -175,7 +177,7 @@ ar:{brand:"راتب",home:"الرئيسية",add:"إضافة",history:"السج�
  billsS:"الفواتير والأقساط",day:"يوم الاستحقاق",endMonth:"آخر شهر (اختياري)",billDate:"تاريخ الاستحقاق",repeats:"التكرار",rep0:"مرة واحدة",rep1:"كل شهر",rep2:"كل شهرين",rep3:"كل 3 أشهر",rep6:"كل 6 أشهر",rep12:"كل سنة",fromD:"من",until:"حتى",pdTitle:"يوم الراتب",pdHere:"وصل راتبك",pdSaved:"الزيادة ذهبت إلى المدخرات",pdShort:"راتبك كان أقل من {s} بمقدار",pdShortHint:"تقدر تغطي الفرق من المدخرات في الشاشة الرئيسية.",pdPrevLeft:"المتبقي من {m} ذهب أيضًا إلى المدخرات",pdPrevOver:"تجاوزت في {m} بمقدار",pdPrevOverHint:"تم خصمه من المدخرات.",pdBills:"فواتير هذا الشهر",pdToSpend:"لك لتصرفه",pdSavings:"المدخرات الآن",pdGo:"يلا نبدأ",pdShow:"اعرض شاشة الراتب",dataS:"بياناتك",dataTxt:"نزّل كل ما سجّلته كجدول بيانات. كل قائمة في ورقة مستقلة.",dlBtn:"تنزيل جدول البيانات (.xlsx)",dlFail:"لم ينجح التنزيل. حاول مرة أخرى.",dlNo:"التنزيل غير متاح هنا.",dlWorking:"جارٍ التجهيز…",bkBtn:"تنزيل نسخة احتياطية (.json)",bkRestore:"استعادة نسخة احتياطية",bkSure:"اضغط مرة أخرى للاستعادة",bkDone:"تمت استعادة النسخة",bkBad:"هذا الملف ليس نسخة احتياطية من راتب.",bkTxt:"النسخة الاحتياطية تحفظ كل شيء، لتنقل بياناتك إلى حساب أو جهاز آخر.",account:"الحساب",signOut:"تسجيل الخروج",signedAs:"مسجّل باسم",
 shMonths:"الأشهر",shWork:"أيام القيادة",shIncome:"الدخل",shExp:"المصاريف",shFuel:"الوقود",shBills:"الفواتير",shOdo:"العداد",shLists:"القوائم",colMonth:"الشهر",colSalary:"الراتب المصروف",colToSave:"الزيادة للمدخرات",colShort:"النقص",colLeft:"المتبقي (للمدخرات)",colDate:"التاريخ",colStart:"البداية",colEnd:"النهاية",colHours:"الساعات",colStartOdo:"عداد البداية",colEndOdo:"عداد النهاية",colKm:"كم القيادة",colJobs:"رحلات",colTips:"البقشيش",colBonus:"المكافآت",colEarn:"الدخل",colFuelCost:"وقود القيادة",colNet:"الصافي",colNote:"ملاحظة",colList:"القائمة",colAmount:"المبلغ",colCat:"الفئة",colType:"النوع",colShare:"نسبة القيادة %",colOdo:"العداد",colLiters:"لترات",colFull:"تعبئة كاملة",colFirst:"أول تاريخ استحقاق",colTimes:"عدد الدفعات",colLast:"آخر شهر",colName:"الاسم",colApps:"التطبيقات",colFixed:"المبلغ الثابت",colFixedDay:"يوم الثابت",yes:"نعم",no:"لا",times:"عدد الدفعات",noEnd:"بلا نهاية",nPay:"دفعات",addBill:"إضافة فاتورة",carS:"السيارة",fuelPrice:"سعر الوقود (ريال/لتر)",
  saso:"الاستهلاك الرسمي كم/لتر",defKmL:"كم/لتر قبل أول قياس",oilEvery:"تغيير الزيت كل (كم)",oilMonths:"أو كل (شهر)",
- oilOdo:"العداد عند آخر تغيير زيت",oilDate:"تاريخ آخر تغيير زيت",budgets:"الميزانيات الشهرية",catsS:"الفئات",catsBud:"الفئات والميزانيات",budgetM:"الميزانية / شهر",catsHint:"اكتب لتغيير الاسم، وحدد الميزانية الشهرية على الطرف (اتركها فارغة إن لم تكن هناك ميزانية). للحذف، حدّد الفئات واضغط حذف المحدد. لا يتغير شيء حتى تضغط حفظ كل الإعدادات. العمليات السابقة تبقى على فئتها.",catDelSel:"حذف المحدد",catSure:"اضغط مرة ثانية للحذف",catPending:"اضغط حفظ كل الإعدادات في الأسفل لتثبيت التغيير.",catUnsaved:"لديك تغييرات لم تُحفظ بعد.",saveAll:"حفظ كل الإعدادات",catPick:"حدّد الفئات التي تريد حذفها أولًا.",newCat:"فئة جديدة",addCat:"إضافة فئة",catDel:"حذف",catInUse:"تم الحذف. العمليات السابقة تبقى على هذه الفئة.",catRestore:"استرجاع الفئات المحذوفة",signin:"سجّل الدخول إلى claude.ai لاستخدام التطبيق.",
+ oilOdo:"العداد عند آخر تغيير زيت",oilDate:"تاريخ آخر تغيير زيت",budgets:"الميزانيات الشهرية",catsS:"الفئات",catsBud:"الفئات والميزانيات",budgetM:"الميزانية / شهر",catsHint:"اكتب لتغيير الاسم، وحدد الميزانية الشهرية على الطرف (اتركها فارغة إن لم تكن هناك ميزانية). للحذف، حدّد الفئات واضغط حذف المحدد. لا يتغير شيء حتى تضغط حفظ كل الإعدادات. العمليات السابقة تبقى على فئتها.",catDelSel:"حذف المحدد",catSure:"اضغط مرة ثانية للحذف",catPending:"اضغط حفظ كل الإعدادات في الأسفل لتثبيت التغيير.",notSaved:"لم يُحفظ بعد",discard:"تجاهل التغييرات",discarded:"تم تجاهل التغييرات",catUnsaved:"لديك تغييرات لم تُحفظ بعد.",saveAll:"حفظ كل الإعدادات",catPick:"حدّد الفئات التي تريد حذفها أولًا.",newCat:"فئة جديدة",addCat:"إضافة فئة",catDel:"حذف",catInUse:"تم الحذف. العمليات السابقة تبقى على هذه الفئة.",catRestore:"استرجاع الفئات المحذوفة",signin:"سجّل الدخول إلى claude.ai لاستخدام التطبيق.",
  synced:"محفوظ في حسابك",offline:"تعذر الوصول إلى بياناتك. تحقق من الاتصال.",payday:"يوم الراتب",fixed:"ثابت",
  driveNet:"المكسب",sinceD:"منذ",allOf:"كل",monthZero:"شهرك الأول: تعيش على المبلغ الابتدائي بينما يتجمع راتب الشهر القادم.",
  prev:"السابق",next:"التالي",readOnly:"يمكنك عرض الصفحة فقط.",perTrip:"/رحلة",fillAll:"أدخل التاريخ والمبلغ.",
@@ -687,22 +689,21 @@ function renderSettings() {
 
   // lists
   const ll = el("div", {class: "list"});
-  S.lists.forEach(l => ll.append(itemRow(l.name, l.kind === "driving" ? t("drivingList") + " · " + (l.apps || []).join(", ") : t("simpleList") + (n(l.fixed_amount) ? " · " + money(l.fixed_amount) + " · " + t("day") + " " + (l.fixed_day || 1) : ""), "", "lists", l.id)));
+  draftDocs("lists").forEach(l => ll.append(draftRow(l.name, l.kind === "driving" ? t("drivingList") + " · " + (l.apps || []).join(", ") : t("simpleList") + (n(l.fixed_amount) ? " · " + money(l.fixed_amount) + " · " + t("day") + " " + (l.fixed_day || 1) : ""), "", "lists", l)));
   const lf = el("form", {id: "form-list"}, field("name", t("name"), "text", ""), field("kind", t("type"), "select", "simple", {options: [["simple", t("simpleList")], ["driving", t("drivingList")]]}),
     field("apps", t("apps"), "text", "", {ph: "Uber, Jeeny, Bolt"}), el("div", {class: "fr"}, field("fixed_amount", t("fixedAmt"), "number", ""), field("fixed_day", t("fixedDay"), "number", "1")),
     el("button", {class: "btn ghost", type: "submit", text: t("addList"), disabled: readOnly}));
-  lf.onsubmit = async ev => { ev.preventDefault(); if (!val(lf, "name")) return;
-    await write(() => coll("lists").add({name: val(lf, "name"), kind: val(lf, "kind"), apps: val(lf, "kind") === "driving" ? val(lf, "apps").split(/[,،]/).map(a => a.trim()).filter(Boolean) : [], fixed_amount: n(num(lf, "fixed_amount")), fixed_day: n(num(lf, "fixed_day")) || 1, fixed_start: s.start_date}));
-    toast(t("saved")); };
+  lf.onsubmit = ev => { ev.preventDefault(); if (!val(lf, "name")) return;
+    draftAdd("lists", {name: val(lf, "name"), kind: val(lf, "kind"), apps: val(lf, "kind") === "driving" ? val(lf, "apps").split(/[,،]/).map(a => a.trim()).filter(Boolean) : [], fixed_amount: n(num(lf, "fixed_amount")), fixed_day: n(num(lf, "fixed_day")) || 1, fixed_start: s.start_date}); };
   out.push(el("section", {class: "card"}, el("h2", {text: t("lists")}), ll, lf));
 
   // bills
   const bl = el("div", {class: "list"});
-  [...S.bills].sort((a, b) => billFirst(a).localeCompare(billFirst(b))).forEach(b => bl.append(itemRow(b.name, repLabel(b) + " · " + (billEvery(b) ? t("fromD") + " " : "") + dayName(billFirst(b)) + (billEvery(b) && n(b.times) ? " · " + n(b.times) + " " + t("nPay") : "") + (billEvery(b) && billLast(b) ? " · " + t("until") + " " + monthName(ym(billLast(b))) : ""), money(b.amount), "bills", b.id)));
+  draftDocs("bills").sort((a, b) => billFirst(a).localeCompare(billFirst(b))).forEach(b => bl.append(draftRow(b.name, repLabel(b) + " · " + (billEvery(b) ? t("fromD") + " " : "") + dayName(billFirst(b)) + (billEvery(b) && n(b.times) ? " · " + n(b.times) + " " + t("nPay") : "") + (billEvery(b) && billLast(b) ? " · " + t("until") + " " + monthName(ym(billLast(b))) : ""), money(b.amount), "bills", b)));
   const bf = el("form", {id: "form-bill"}, field("name", t("name"), "text", ""), el("div", {class: "fr"}, field("amount", t("amount"), "number", ""), field("date", t("billDate"), "date", today())),
     el("div", {class: "fr"}, field("every", t("repeats"), "select", "1", {options: [0, 1, 2, 3, 6, 12].map(k => [k, t("rep" + k)])}), field("times", t("times"), "number", "", {ph: t("noEnd")})), el("button", {class: "btn ghost", type: "submit", text: t("addBill"), disabled: readOnly}));
-  bf.onsubmit = async ev => { ev.preventDefault(); if (!val(bf, "name") || !num(bf, "amount")) { toast(t("fillAll")); return; }
-    await write(() => coll("bills").add({name: val(bf, "name"), amount: num(bf, "amount"), date: val(bf, "date") || today(), every: n(val(bf, "every")), times: n(val(bf, "every")) ? Math.max(0, Math.round(n(num(bf, "times")))) : 0})); toast(t("saved")); };
+  bf.onsubmit = ev => { ev.preventDefault(); if (!val(bf, "name") || !num(bf, "amount")) { toast(t("fillAll")); return; }
+    draftAdd("bills", {name: val(bf, "name"), amount: num(bf, "amount"), date: val(bf, "date") || today(), every: n(val(bf, "every")), times: n(val(bf, "every")) ? Math.max(0, Math.round(n(num(bf, "times")))) : 0}); };
   out.push(el("section", {class: "card"}, el("h2", {text: t("billsS")}), bl, bf));
 
   // car
@@ -765,32 +766,46 @@ function renderSettings() {
     const d = catPatch(); d.custom_cats.push({key: "c_" + Date.now().toString(36), name: nn});
     keepDraft(d, "catPending");
   };
-  const removedCats = allCats(D).filter(c => !listedCats(D).includes(c));
-  const restore = removedCats.length ? el("button", {class: "btn ghost", type: "button", text: t("catRestore") + " (" + removedCats.length + ")", disabled: readOnly}) : null;
-  if (restore) restore.onclick = () => { const d = catPatch(); removedCats.forEach(c => { const {removed, hidden, ...rest} = d.cat_cfg[c] || {}; if (Object.keys(rest).length) d.cat_cfg[c] = rest; else delete d.cat_cfg[c]; }); keepDraft(d, "catPending"); };
   const catf = el("form", {id: "form-cats"}, el("h2", {text: t("catsBud")}), el("p", {class: "hint", text: t("catsHint")}), catList,
-    delSel, el("div", {class: "addrow"}, field("new_cat", t("newCat"), "text", ""), addCat), restore);
+    delSel, el("div", {class: "addrow"}, field("new_cat", t("newCat"), "text", ""), addCat));
   out.push(el("section", {class: "card"}, catf));
 
   const budPatch = () => { const b = {}; allCats(D).forEach(c => { const v = num(catf, "b_" + c); if (v) b[c] = v; else if (v == null && bud[c] && !activeCats(D).includes(c)) b[c] = bud[c]; }); return {budgets: b}; };
 
-  // one Save for every setting on this page; Add and Delete also save what you've typed so nothing is lost
+  // One Save for the whole page. Typed values, categories, lists and bills all wait for it.
   const saveAll = async (extra = {}, msg) => {
     const patch = {...genPatch(), ...carPatch(), ...catPatch(), ...budPatch(), ...extra};
+    const dd = docDraft; docDraft = emptyDocDraft();
     settingsDirty.clear(); catDraft = null;
+    for (const col of ["lists", "bills"]) {
+      for (const id of dd[col].del) await write(() => coll(col).doc(id).delete());
+      for (const d of dd[col].add) { const {_tmp, ...data} = d; await write(() => coll(col).add(data)); }
+    }
     await saveSettings(patch, true, true);
     toast(t(msg || "saved"));
   };
   [g, cf, catf].forEach(f => { f.onsubmit = ev => { ev.preventDefault(); saveAll(); }; });
   const sv = el("button", {class: "btn", type: "button", text: t("saveAll"), disabled: readOnly}); sv.onclick = () => saveAll();
-  out.push(el("div", {class: "saveall"}, catDraft ? el("p", {class: "unsaved", text: t("catUnsaved")}) : null, sv));
+  const dc = el("button", {class: "btn ghost", type: "button", text: t("discard")});
+  dc.onclick = () => { settingsDirty.clear(); catDraft = null; docDraft = emptyDocDraft(); render(); toast(t("discarded")); };
+  out.push(el("div", {class: "saveall"}, el("p", {class: "unsaved", text: t("catUnsaved"), hidden: !hasDraft()}), sv, el("div", {class: "discard", hidden: !hasDraft()}, dc)));
   return out;
 }
-function itemRow(title, sub, amt, col, id) {
+// Lists and bills on the Settings page: adds and deletes wait in docDraft until Save all settings.
+const emptyDocDraft = () => ({lists: {add: [], del: []}, bills: {add: [], del: []}});
+let docDraft = emptyDocDraft();
+const hasDraft = () => !!(catDraft || settingsDirty.size || ["lists", "bills"].some(c => docDraft[c].add.length || docDraft[c].del.length));
+const draftDocs = col => [...S[col].filter(d => !docDraft[col].del.includes(d.id)), ...docDraft[col].add];
+function draftAdd(col, data) { docDraft[col].add.push({...data, _tmp: "n" + Date.now().toString(36)}); render(); toast(t("catPending")); }
+function draftRow(title, sub, amt, col, d) {
   const del = el("button", {class: "icon-btn", type: "button", text: t("del"), disabled: readOnly});
-  del.onclick = async () => { if (!del.classList.contains("sure")) { del.classList.add("sure"); del.textContent = t("sure"); setTimeout(() => { del.classList.remove("sure"); del.textContent = t("del"); }, 3000); return; } await write(() => coll(col).doc(id).delete()); toast(t("deleted")); };
-  return el("div", {class: "it"}, el("div", {class: "l"}, el("b", {text: title}), el("span", {text: sub})), el("div", {class: "r"}, amt ? el("span", {text: amt}) : null, del));
+  del.onclick = () => {
+    if (d._tmp) docDraft[col].add = docDraft[col].add.filter(x => x._tmp !== d._tmp); else docDraft[col].del.push(d.id);
+    render(); toast(t("catPending"));
+  };
+  return el("div", {class: "it"}, el("div", {class: "l"}, el("b", {text: title}), el("span", {text: sub + (d._tmp ? " · " + t("notSaved") : "")})), el("div", {class: "r"}, amt ? el("span", {text: amt}) : null, del));
 }
+function syncUnsaved() { const on = hasDraft(); document.querySelectorAll(".saveall .unsaved, .saveall .discard").forEach(e => { e.hidden = !on; }); }
 
 /* ---------- store ---------- */
 const pdPatch = (X, patch) => { const o = {...(S.paydays.find(p => p.id === X) || {})}; delete o.id; return {...o, ...patch, at: new Date().toISOString()}; };
@@ -927,11 +942,11 @@ async function restoreBackup(file) {
 /* ---------- keep typed settings across re-renders ---------- */
 const settingsDirty = new Map(); // "formId|name" -> value or checked
 let catDraft = null; // unsaved category changes on the Settings page ({cat_cfg, custom_cats}), kept until Save all settings
-document.addEventListener("input", ev => { const e = ev.target; if (view !== "settings" || !e.form || !e.name || !["form-general", "form-car", "form-cats", "form-budgets"].includes(e.form.id) || e.name === "new_cat") return; settingsDirty.set(e.form.id + "|" + e.name, e.type === "checkbox" ? e.checked : e.value); }, true);
+document.addEventListener("input", ev => { const e = ev.target; if (view !== "settings" || !e.form || !e.name || !["form-general", "form-car", "form-cats", "form-budgets"].includes(e.form.id) || e.name === "new_cat") return; settingsDirty.set(e.form.id + "|" + e.name, e.type === "checkbox" ? e.checked : e.value); syncUnsaved(); }, true);
 document.addEventListener("change", ev => { const e = ev.target; if (view !== "settings" || !e.form || !e.name || !["form-general", "form-car", "form-cats", "form-budgets"].includes(e.form.id) || e.name === "new_cat") return; settingsDirty.set(e.form.id + "|" + e.name, e.type === "checkbox" ? e.checked : e.value); }, true);
 function restoreDirty() {
   settingsDirty.forEach((v, k) => { const [fid, nm] = k.split("|"); const f = document.getElementById(fid); const e = f && f.elements[nm]; if (!e) return; if (e.type === "checkbox") e.checked = v; else e.value = v; });
-  syncFuelShare();
+  syncFuelShare(); syncUnsaved();
 }
 // The fuel share % only matters when fuel is counted by a fixed share, so it is shown only then.
 function syncFuelShare(f) {
