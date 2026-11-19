@@ -471,7 +471,8 @@ function renderHome() {
   const shownCats = new Set(listedCats());
   S.expenses.filter(e => ym(e.date) === C && !e.bill).forEach(e => { const p = expSplit(e).p; let k = e.category || "Other"; if (!shownCats.has(k)) k = "Other"; if (p) cats[k] = (cats[k] || 0) + p; });
   if (m.persFuel) cats["Fuel (personal)"] = m.persFuel;
-  const ce = Object.entries(cats).sort((a, b) => b[1] - a[1]);
+  // Same categories, in the same order, as Settings > Categories and Monthly budgets (zeros included).
+  const ce = [...listedCats().map(c => [c, cats[c] || 0]), ...Object.entries(cats).filter(([c]) => !shownCats.has(c))];
   if (ce.length) {
     const bud = S.settings.budgets || {};
     const max = Math.max(1, ...ce.map(([c, v]) => Math.max(v, n(bud[c]))));
@@ -758,7 +759,7 @@ function renderSettings() {
 
   // budgets
   const bud = s.budgets || {};
-  const bgf = el("form", {id: "form-budgets"}, el("h2", {text: t("budgets")}), el("div", {class: "fr"}, ...activeCats().filter(c => !["Car wash", "Maintenance"].includes(c)).map(c => field("b_" + c, catName(c), "number", bud[c] ?? ""))));
+  const bgf = el("form", {id: "form-budgets"}, el("h2", {text: t("budgets")}), el("div", {class: "fr"}, ...activeCats().map(c => field("b_" + c, catName(c), "number", bud[c] ?? ""))));
   const budPatch = () => { const b = {}; allCats().forEach(c => { const v = num(bgf, "b_" + c); if (v) b[c] = v; else if (v == null && bud[c] && !activeCats().includes(c)) b[c] = bud[c]; }); return {budgets: b}; };
   out.push(el("section", {class: "card"}, bgf));
 
