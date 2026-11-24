@@ -154,7 +154,7 @@ details.more summary{cursor:pointer;color:var(--accent);font-size:14px;font-weig
 /* ---------- i18n ---------- */
 const T = {
 en:{brand:"Rateb",home:"Home",add:"Add",history:"History",settings:"Settings",lang:"العربية",
- driveEarn:"Driving earnings",billsMark:"Bills {x} (the line)",billsCovered:"covered",billsToGo:"more to cover bills",goalsS:"Savings goals",goalsHint:"Each goal: name, amount (SAR) and the date you need it by. Savings fill goals from the top down. Tick a goal to delete it.",newGoal:"New goal",goalPh:"e.g. Shopping",addGoal:"Add goal",goalBy:"By",goalDone:"Reached",goalPace:"about {x} at each of the next {n} paydays",goalLate:"date passed",nowTitle:"This month's money",daysLeft:"{d} days left",perDay:"About {x} a day until {date}.",overNow:"You've spent more than this month's salary.",startMoney:"Starting money",salaryOf:"{m} salary",leftNote2:"Whatever is left on {date} goes to savings.",nextTitle:"Next month's salary",paidOn:"paid on {date}, locked until then",ofSalary:"of {x}",toGoShort:"to go",paceShort:"earn about {x} a day for {d} days",potDone:"Salary reached. Extra {x} goes to savings.",soFar:"So far",potNote:"Everything you earn this month builds next month's salary.",nextPay:"Next month's pay",locked:"Locked until",of:"of",salaryGoal:"salary goal",toSave:"extra goes to savings",toGo:"to reach your salary",
+ driveEarn:"Driving earnings",salMode:"Monthly salary",salAuto:"Bills + budgets (worked out for you)",salFixed:"A fixed amount",salAutoHint:"{m}: bills {b} + budgets {g} = {x}. Changes when you edit bills or budgets.",budgetsW:"budgets {g}",billsMark:"Bills {x} (the line)",billsCovered:"covered",billsToGo:"more to cover bills",goalsS:"Savings goals",goalsHint:"Each goal: name, amount (SAR) and the date you need it by. Savings fill goals from the top down. Tick a goal to delete it.",newGoal:"New goal",goalPh:"e.g. Shopping",addGoal:"Add goal",goalBy:"By",goalDone:"Reached",goalPace:"about {x} at each of the next {n} paydays",goalLate:"date passed",nowTitle:"This month's money",daysLeft:"{d} days left",perDay:"About {x} a day until {date}.",overNow:"You've spent more than this month's salary.",startMoney:"Starting money",salaryOf:"{m} salary",leftNote2:"Whatever is left on {date} goes to savings.",nextTitle:"Next month's salary",paidOn:"paid on {date}, locked until then",ofSalary:"of {x}",toGoShort:"to go",paceShort:"earn about {x} a day for {d} days",potDone:"Salary reached. Extra {x} goes to savings.",soFar:"So far",potNote:"Everything you earn this month builds next month's salary.",nextPay:"Next month's pay",locked:"Locked until",of:"of",salaryGoal:"salary goal",toSave:"extra goes to savings",toGo:"to reach your salary",
  thisMonth:"This month",salary:"Salary",startMoney:"Starting money",bills:"Bills",spent:"Spent",left:"Left to spend",
  leftNote:"Whatever is left on the last day goes to savings.",leftNoteZero:"Whatever is left on the last day is added to next month's pay.",carry:"Unspent starting money",firstSalary:"First salary (money you had at the start)",advance:"Advance from next month's pay",takeAdv:"Take an advance",advNote:"Borrow from next month's pay for this month. It comes off next month's pay. Available now: {x}.",dayExists:"You already have a shift on this day. Opened it so you can update it.",dayNote:"One shift per day. Update the day's totals: first start and last end odometer, and each app's total SAR and trips.",pace1:"Earn about",pace2:"a day for the next {d} days to hit your salary.",cushion:"Covers {m} months of salary",savings:"Savings",short:"Your pay for this month was",shortBy:"short of your salary by",
  cover:"Cover from savings",billsDue:"Bills",stillDue:"Still to pay",markPaid:"Paid?",isPaid:"Paid",forMonth:"for",prevMonth:"Paid at the end of the month before (from money that just arrived)",more:"More details (times, tips, bonuses, note)",moreKm:"More details (km, times, tips, bonuses, note)",fuelMode:"Count driving fuel by",fmKm:"Km on each driving day (most exact)",fmShare:"A fixed share of each fill-up",fmAll:"All fuel is for driving",fuelShare:"Driving share of fuel %",fuelFromFill:"Fuel comes off from your fill-ups, so you don't need km here.",moreExp:"More (type, note)",recent:"Recent",welcome:"Welcome to Rateb",welcomeTxt:"Rateb turns your driving income into a monthly salary. What you earn this month is locked and paid to you on the 1st. Anything extra goes to savings.",qHave:"How much money do you have right now to live on until the 1st?",qSalary:"What monthly salary do you want to pay yourself?",qFixed:"Do you get a fixed amount every month, like a stipend? (optional)",qFixedName:"Name, e.g. University",qWork:"Which driving apps do you use, like Uber, Careem, Jeeny or Bolt?",qWorkName:"List name, e.g. Driving",qOther:"Other income lists (optional, comma separated), e.g. Freelance, Tutoring",startBtn:"Start",afterCosts:"after costs",covered:"Covered from savings",driving:"Driving",earnings:"Earnings",workFuel:"Driving fuel",carCosts:"Car costs",profit:"Profit",
@@ -177,7 +177,7 @@ shMonths:"Months",shWork:"Driving days",shIncome:"Income",shExp:"Expenses",shFue
  kmCheck:"End odometer must be higher than start.",kmLnote:"Measured on full tanks only.",fills:"fill-ups",since:"since full",
  paysFrom:"Paid from that month's salary",addFirst:"Tap Add to log your first entry.",cats:{"Food & drinks":"Food & drinks","Groceries":"Groceries","Transport (non-work)":"Transport (non-work)","Phone/data":"Phone/data","Subscriptions":"Subscriptions","Health & dental":"Health & dental","Education":"Education","Clothes":"Clothes","Family":"Family","Entertainment":"Entertainment","Gifts":"Gifts","Debt/installments":"Debt/installments","Car wash":"Car wash","Maintenance":"Maintenance","Other":"Other","Fuel (personal)":"Fuel (personal)"}},
 ar:{brand:"راتب",home:"الرئيسية",add:"إضافة",history:"السجل",settings:"الإعدادات",lang:"English",
- driveEarn:"دخل القيادة",billsMark:"الفواتير {x} (الخط)",billsCovered:"مغطاة",billsToGo:"متبقي لتغطية الفواتير",goalsS:"أهداف الادخار",goalsHint:"لكل هدف: الاسم والمبلغ (ر.س) والتاريخ الذي تحتاجه قبله. المدخرات تملأ الأهداف بالترتيب من الأعلى. حدّد الهدف لحذفه.",newGoal:"هدف جديد",goalPh:"مثلًا: تسوق",addGoal:"إضافة هدف",goalBy:"قبل",goalDone:"تحقق",goalPace:"حوالي {x} في كل راتب من الرواتب الـ {n} القادمة",goalLate:"فات الموعد",nowTitle:"فلوس هذا الشهر",daysLeft:"باقي {d} يوم",perDay:"حوالي {x} يوميًا حتى {date}.",overNow:"صرفت أكثر من راتب هذا الشهر.",startMoney:"المبلغ الذي بدأت به",salaryOf:"راتب {m}",leftNote2:"ما يتبقى في {date} يذهب للادخار.",nextTitle:"راتب الشهر القادم",paidOn:"يُصرف في {date} ومقفل حتى ذلك اليوم",ofSalary:"من {x}",toGoShort:"متبقي",paceShort:"اكسب حوالي {x} يوميًا لمدة {d} يوم",potDone:"وصلت لراتبك. الزيادة {x} تذهب للادخار.",soFar:"المجموع حتى الآن",potNote:"كل ما تكسبه هذا الشهر يكوّن راتب الشهر القادم.",nextPay:"راتب الشهر القادم",locked:"مقفل حتى",of:"من",salaryGoal:"هدف الراتب",toSave:"الزيادة تذهب للادخار",toGo:"للوصول إلى راتبك",
+ driveEarn:"دخل القيادة",salMode:"الراتب الشهري",salAuto:"الفواتير + الميزانيات (يُحسب تلقائيًا)",salFixed:"مبلغ ثابت",salAutoHint:"{m}: الفواتير {b} + الميزانيات {g} = {x}. يتغير عند تعديل الفواتير أو الميزانيات.",budgetsW:"الميزانيات {g}",billsMark:"الفواتير {x} (الخط)",billsCovered:"مغطاة",billsToGo:"متبقي لتغطية الفواتير",goalsS:"أهداف الادخار",goalsHint:"لكل هدف: الاسم والمبلغ (ر.س) والتاريخ الذي تحتاجه قبله. المدخرات تملأ الأهداف بالترتيب من الأعلى. حدّد الهدف لحذفه.",newGoal:"هدف جديد",goalPh:"مثلًا: تسوق",addGoal:"إضافة هدف",goalBy:"قبل",goalDone:"تحقق",goalPace:"حوالي {x} في كل راتب من الرواتب الـ {n} القادمة",goalLate:"فات الموعد",nowTitle:"فلوس هذا الشهر",daysLeft:"باقي {d} يوم",perDay:"حوالي {x} يوميًا حتى {date}.",overNow:"صرفت أكثر من راتب هذا الشهر.",startMoney:"المبلغ الذي بدأت به",salaryOf:"راتب {m}",leftNote2:"ما يتبقى في {date} يذهب للادخار.",nextTitle:"راتب الشهر القادم",paidOn:"يُصرف في {date} ومقفل حتى ذلك اليوم",ofSalary:"من {x}",toGoShort:"متبقي",paceShort:"اكسب حوالي {x} يوميًا لمدة {d} يوم",potDone:"وصلت لراتبك. الزيادة {x} تذهب للادخار.",soFar:"المجموع حتى الآن",potNote:"كل ما تكسبه هذا الشهر يكوّن راتب الشهر القادم.",nextPay:"راتب الشهر القادم",locked:"مقفل حتى",of:"من",salaryGoal:"هدف الراتب",toSave:"الزيادة تذهب للادخار",toGo:"للوصول إلى راتبك",
  thisMonth:"هذا الشهر",salary:"الراتب",startMoney:"المبلغ الابتدائي",bills:"الفواتير",spent:"المصروف",left:"المتبقي للصرف",
  leftNote:"ما يتبقى في آخر يوم يذهب للادخار.",leftNoteZero:"ما يتبقى في آخر يوم يُضاف إلى راتب الشهر القادم.",carry:"المبلغ الابتدائي غير المصروف",firstSalary:"أول راتب (المبلغ الذي كان معك)",advance:"سلفة من راتب الشهر القادم",takeAdv:"خذ سلفة",advNote:"استلف من راتب الشهر القادم لهذا الشهر. تُخصم من راتب الشهر القادم. المتاح الآن: {x}.",dayExists:"لديك وردية في هذا اليوم. تم فتحها لتحديثها.",dayNote:"وردية واحدة لكل يوم. حدّث إجمالي اليوم: أول عداد بداية وآخر عداد نهاية، وإجمالي كل تطبيق.",pace1:"اكسب حوالي",pace2:"يوميًا خلال {d} يومًا القادمة لتصل إلى راتبك.",cushion:"تكفي {m} شهر من الراتب",savings:"المدخرات",short:"راتب هذا الشهر كان",shortBy:"أقل من راتبك بـ",
  cover:"غطِّ من المدخرات",billsDue:"الفواتير",stillDue:"المتبقي للدفع",markPaid:"دُفعت؟",isPaid:"مدفوعة",forMonth:"لشهر",prevMonth:"تُدفع في نهاية الشهر السابق (من المبلغ الذي وصل)",more:"تفاصيل أكثر (الأوقات، البقشيش، المكافآت، ملاحظة)",moreKm:"تفاصيل أكثر (الكيلومترات، الأوقات، البقشيش، المكافآت، ملاحظة)",fuelMode:"احسب وقود القيادة حسب",fmKm:"الكيلومترات في كل يوم قيادة (الأدق)",fmShare:"نسبة ثابتة من كل تعبئة",fmAll:"كل الوقود للقيادة",fuelShare:"نسبة القيادة من الوقود %",fuelFromFill:"الوقود يُخصم من تعبئاتك، فلا تحتاج الكيلومترات هنا.",moreExp:"المزيد (النوع، ملاحظة)",recent:"الأخيرة",welcome:"أهلًا بك في راتب",welcomeTxt:"راتب يحوّل دخلك من القيادة إلى راتب شهري. ما تكسبه هذا الشهر يُقفل ويُصرف لك في يوم 1. وأي زيادة تذهب للادخار.",qHave:"كم معك الآن من المال لتعيش عليه حتى يوم 1؟",qSalary:"كم الراتب الشهري الذي تريد أن تدفعه لنفسك؟",qFixed:"هل لديك مبلغ ثابت كل شهر مثل المكافأة الجامعية؟ (اختياري)",qFixedName:"الاسم، مثل الجامعة",qWork:"ما تطبيقات التوصيل التي تعمل عليها، مثل أوبر وكريم وجيني وبولت؟",qWorkName:"اسم القائمة، مثل القيادة",qOther:"قوائم دخل أخرى (اختياري، مفصولة بفاصلة) مثل عمل حر، دروس خصوصية",startBtn:"ابدأ",afterCosts:"بعد المصاريف",covered:"تمت التغطية من المدخرات",driving:"قيادة",earnings:"الدخل",workFuel:"وقود القيادة",carCosts:"مصاريف السيارة",profit:"الربح",
@@ -332,10 +332,15 @@ function billsFor(X) {
   if (X <= zeroMonth()) return [];
   return S.bills.filter(b => billDue(b, X));
 }
+// Salary for pay month P: a fixed number, or (salary_mode "auto") that month's bills + the monthly budgets
+const salaryMode = () => S.settings.salary_mode || "fixed";
+const budgetTotal = () => { const b = S.settings.budgets || {}; return listedCats().reduce((a, c) => a + n(b[c]), 0); };
+const billsTotal = P => billsFor(P).reduce((a, b) => a + n(b.amount), 0);
+const salaryFor = P => salaryMode() === "auto" ? r2(billsTotal(P) + budgetTotal()) : n(S.settings.salary);
 function monthFor(X) {
   const Z = zeroMonth();
   const inX = x => ym(x.date) === X && counts(x.date);
-  const target = n(S.settings.salary);
+  const target = salaryFor(X);
   const pd = S.paydays.find(p => p.id === X) || {};
   const cover = n(pd.cover), advance = n(pd.advance);
   let basePay, pot = null, toSave = 0, short = 0;
@@ -395,7 +400,7 @@ function renderHome() {
   const out = [];
   if (!S.shifts.length && !S.expenses.length && !S.income.length && !S.fuel.length) out.push(el("div", {class: "card"}, el("p", {class: "hint", text: t("addFirst")})));
 
-  const target = n(S.settings.salary);
+  const target = salaryFor(N);
   const dim = new Date(Date.UTC(+C.slice(0, 4), +C.slice(5, 7), 0)).getUTCDate();
   const daysLeft = Math.max(1, dim - n(today().slice(8)) + 1);
   const lastDay = dayName(C + "-" + String(dim).padStart(2, "0")), payDay = dayName(N + "-01");
@@ -446,7 +451,7 @@ function renderHome() {
   const nb = billsFor(N).reduce((a, b) => a + n(b.amount), 0);
   if (nb > 0 && target > 0) {
     potCard.querySelector(".trackwrap").append(el("b", {class: "mark", style: "inset-inline-start:" + Math.min(100, nb / target * 100) + "%"}));
-    potCard.append(el("p", {class: "sub small"}, el("span", {class: "muted", text: t("billsMark").replace("{x}", money(nb)) + " · "}),
+    potCard.append(el("p", {class: "sub small"}, el("span", {class: "muted", text: t("billsMark").replace("{x}", money(nb)) + (salaryMode() === "auto" ? " + " + t("budgetsW").replace("{g}", money(budgetTotal())) : "") + " · "}),
       pot.total >= nb ? el("span", {class: "good", text: t("billsCovered")}) : el("span", {class: "warn", text: money(nb - pot.total) + " " + t("billsToGo")})));
   }
   if (pot.total >= target) potCard.append(el("p", {class: "sub good", text: t("potDone").replace("{x}", money(pot.total - target))}));
@@ -723,9 +728,13 @@ function renderHistory() {
 function renderSettings() {
   const s = S.settings, out = [];
   const g = el("form", {id: "form-general"}, el("h2", {text: t("general")}),
-    field("salary", t("salaryAmt"), "number", s.salary), field("start_date", t("startDate"), "date", s.start_date), field("start_balance", t("startBal"), "number", s.start_balance),
+    field("salary_mode", t("salMode"), "select", s.salary_mode || "fixed", {options: [["auto", t("salAuto")], ["fixed", t("salFixed")]]}),
+    field("salary", t("salaryAmt"), "number", s.salary),
+    el("p", {class: "hint", id: "sal-auto", text: t("salAutoHint").replace("{m}", monthName(addM(ym(today()), 1))).replace("{b}", money(billsTotal(addM(ym(today()), 1)))).replace("{g}", money(budgetTotal())).replace("{x}", money(billsTotal(addM(ym(today()), 1)) + budgetTotal()))}),
+    field("start_date", t("startDate"), "date", s.start_date), field("start_balance", t("startBal"), "number", s.start_balance),
     field("currency", "Currency", "text", s.currency || "SAR"));
-  const genPatch = () => ({salary: n(num(g, "salary")), start_date: val(g, "start_date") || today(), start_balance: n(num(g, "start_balance")), currency: val(g, "currency") || "SAR"});
+  g.elements.salary_mode.addEventListener("change", syncSalMode);
+  const genPatch = () => ({salary_mode: val(g, "salary_mode") || "fixed", salary: n(num(g, "salary")), start_date: val(g, "start_date") || today(), start_balance: n(num(g, "start_balance")), currency: val(g, "currency") || "SAR"});
   out.push(el("section", {class: "card"}, g));
 
   // savings goals: same pattern as categories (draft until Save all settings)
@@ -942,7 +951,7 @@ function renderPayday() {
   if (!S.ready || S.needsSetup) return;
   const info = paydayInfo(); if (!info) return;
   const {C, m, prev} = info, P = addM(C, -1);
-  const fill = (k, o) => t(k).replace("{s}", money(S.settings.salary)).replace("{m}", monthName(P));
+  const fill = (k, o) => t(k).replace("{s}", money(salaryFor(C))).replace("{m}", monthName(P));
   const lines = el("div", {class: "lines"});
   if (m.toSave > 0) lines.append(el("div", {}, el("span", {class: "plus", text: "+" + money(m.toSave) + " "}), fill("pdSaved")));
   if (m.short > 0) lines.append(el("div", {}, fill("pdShort") + " ", el("span", {class: "minus", text: money(m.short)}), el("div", {class: "note", text: t("pdShortHint")})));
@@ -1029,7 +1038,14 @@ document.addEventListener("input", ev => { const e = ev.target; if (view !== "se
 document.addEventListener("change", ev => { const e = ev.target; if (view !== "settings" || !e.form || !e.name || !["form-general", "form-car", "form-cats", "form-goals"].includes(e.form.id) || e.name === "new_cat" || e.name.startsWith("ng_")) return; settingsDirty.set(e.form.id + "|" + e.name, e.type === "checkbox" ? e.checked : e.value); }, true);
 function restoreDirty() {
   settingsDirty.forEach((v, k) => { const [fid, nm] = k.split("|"); const f = document.getElementById(fid); const e = f && f.elements[nm]; if (!e) return; if (e.type === "checkbox") e.checked = v; else e.value = v; });
-  syncFuelShare(); syncUnsaved();
+  syncFuelShare(); syncSalMode(); syncUnsaved();
+}
+// Auto salary hides the amount field and shows how it's worked out instead.
+function syncSalMode() {
+  const f = document.getElementById("form-general"); if (!f) return;
+  const auto = f.elements.salary_mode.value === "auto";
+  f.elements.salary.closest(".f").hidden = auto;
+  const h = document.getElementById("sal-auto"); if (h) h.hidden = !auto;
 }
 // The fuel share % only matters when fuel is counted by a fixed share, so it is shown only then.
 function syncFuelShare(f) {
